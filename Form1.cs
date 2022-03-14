@@ -18,5 +18,10 @@ namespace SemAlgoritmia
 
             circleList = new List<Circle>();
         }
+
+        private void buttonLoadImage_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

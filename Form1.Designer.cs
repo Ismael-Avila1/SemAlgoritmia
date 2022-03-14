@@ -66,6 +66,7 @@
             this.buttonLoadImage.TabIndex = 1;
             this.buttonLoadImage.Text = "Cargar Imagen";
             this.buttonLoadImage.UseVisualStyleBackColor = false;
+            this.buttonLoadImage.Click += new System.EventHandler(this.buttonLoadImage_Click);
             // 
             // buttonCreateGraph
             // 
@@ -79,6 +80,7 @@
             this.buttonCreateGraph.TabIndex = 2;
             this.buttonCreateGraph.Text = "Generar Grafo";
             this.buttonCreateGraph.UseVisualStyleBackColor = false;
+            this.buttonCreateGraph.Visible = false;
             // 
             // treeView
             // 
@@ -87,6 +89,7 @@
             this.treeView.Name = "treeView";
             this.treeView.Size = new System.Drawing.Size(250, 257);
             this.treeView.TabIndex = 3;
+            this.treeView.Visible = false;
             // 
             // groupBox1
             // 
@@ -103,6 +106,7 @@
             this.groupBox1.TabIndex = 4;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Agentes y Objetivos";
+            this.groupBox1.Visible = false;
             // 
             // comboBoxAgentSelection
             // 
@@ -165,6 +169,7 @@
             this.buttonRunSimulation.TabIndex = 5;
             this.buttonRunSimulation.Text = "Iniciar Simulación";
             this.buttonRunSimulation.UseVisualStyleBackColor = false;
+            this.buttonRunSimulation.Visible = false;
             // 
             // listBoxLog
             // 
@@ -175,6 +180,7 @@
             this.listBoxLog.Name = "listBoxLog";
             this.listBoxLog.Size = new System.Drawing.Size(356, 184);
             this.listBoxLog.TabIndex = 6;
+            this.listBoxLog.Visible = false;
             // 
             // openFileDialog
             // 
