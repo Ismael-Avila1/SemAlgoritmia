@@ -33,11 +33,11 @@
             this.buttonCreateGraph = new System.Windows.Forms.Button();
             this.treeView = new System.Windows.Forms.TreeView();
             this.groupBox = new System.Windows.Forms.GroupBox();
-            this.comboBoxAgentSelection = new System.Windows.Forms.ComboBox();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
-            this.labelAgent = new System.Windows.Forms.Label();
-            this.labelObjetive = new System.Windows.Forms.Label();
             this.buttonSetAgentAndObjetive = new System.Windows.Forms.Button();
+            this.labelObjetive = new System.Windows.Forms.Label();
+            this.labelAgent = new System.Windows.Forms.Label();
+            this.comboBoxObjetiveSelection = new System.Windows.Forms.ComboBox();
+            this.comboBoxAgentSelection = new System.Windows.Forms.ComboBox();
             this.buttonRunSimulation = new System.Windows.Forms.Button();
             this.listBoxLog = new System.Windows.Forms.ListBox();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
@@ -81,6 +81,7 @@
             this.buttonCreateGraph.Text = "Generar Grafo";
             this.buttonCreateGraph.UseVisualStyleBackColor = false;
             this.buttonCreateGraph.Visible = false;
+            this.buttonCreateGraph.Click += new System.EventHandler(this.buttonCreateGraph_Click);
             // 
             // treeView
             // 
@@ -96,7 +97,7 @@
             this.groupBox.Controls.Add(this.buttonSetAgentAndObjetive);
             this.groupBox.Controls.Add(this.labelObjetive);
             this.groupBox.Controls.Add(this.labelAgent);
-            this.groupBox.Controls.Add(this.comboBox2);
+            this.groupBox.Controls.Add(this.comboBoxObjetiveSelection);
             this.groupBox.Controls.Add(this.comboBoxAgentSelection);
             this.groupBox.Font = new System.Drawing.Font("Open Sans", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.groupBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(251)))), ((int)(((byte)(252)))));
@@ -107,43 +108,6 @@
             this.groupBox.TabStop = false;
             this.groupBox.Text = "Agentes y Objetivos";
             this.groupBox.Visible = false;
-            // 
-            // comboBoxAgentSelection
-            // 
-            this.comboBoxAgentSelection.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxAgentSelection.FormattingEnabled = true;
-            this.comboBoxAgentSelection.Location = new System.Drawing.Point(6, 64);
-            this.comboBoxAgentSelection.Name = "comboBoxAgentSelection";
-            this.comboBoxAgentSelection.Size = new System.Drawing.Size(170, 28);
-            this.comboBoxAgentSelection.TabIndex = 0;
-            // 
-            // comboBox2
-            // 
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(6, 160);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(170, 28);
-            this.comboBox2.TabIndex = 1;
-            // 
-            // labelAgent
-            // 
-            this.labelAgent.AutoSize = true;
-            this.labelAgent.Font = new System.Drawing.Font("Open Sans", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.labelAgent.Location = new System.Drawing.Point(6, 38);
-            this.labelAgent.Name = "labelAgent";
-            this.labelAgent.Size = new System.Drawing.Size(338, 23);
-            this.labelAgent.TabIndex = 2;
-            this.labelAgent.Text = "Selecciona el vertice para añadir el Agente";
-            // 
-            // labelObjetive
-            // 
-            this.labelObjetive.AutoSize = true;
-            this.labelObjetive.Font = new System.Drawing.Font("Open Sans", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.labelObjetive.Location = new System.Drawing.Point(6, 124);
-            this.labelObjetive.Name = "labelObjetive";
-            this.labelObjetive.Size = new System.Drawing.Size(348, 23);
-            this.labelObjetive.TabIndex = 3;
-            this.labelObjetive.Text = "Selecciona el vertice para añadir el Objetivo";
             // 
             // buttonSetAgentAndObjetive
             // 
@@ -156,6 +120,44 @@
             this.buttonSetAgentAndObjetive.TabIndex = 4;
             this.buttonSetAgentAndObjetive.Text = "Establecer Agente y Objetivo";
             this.buttonSetAgentAndObjetive.UseVisualStyleBackColor = false;
+            // 
+            // labelObjetive
+            // 
+            this.labelObjetive.AutoSize = true;
+            this.labelObjetive.Font = new System.Drawing.Font("Open Sans", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.labelObjetive.Location = new System.Drawing.Point(6, 124);
+            this.labelObjetive.Name = "labelObjetive";
+            this.labelObjetive.Size = new System.Drawing.Size(348, 23);
+            this.labelObjetive.TabIndex = 3;
+            this.labelObjetive.Text = "Selecciona el vertice para añadir el Objetivo";
+            // 
+            // labelAgent
+            // 
+            this.labelAgent.AutoSize = true;
+            this.labelAgent.Font = new System.Drawing.Font("Open Sans", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.labelAgent.Location = new System.Drawing.Point(6, 38);
+            this.labelAgent.Name = "labelAgent";
+            this.labelAgent.Size = new System.Drawing.Size(338, 23);
+            this.labelAgent.TabIndex = 2;
+            this.labelAgent.Text = "Selecciona el vertice para añadir el Agente";
+            // 
+            // comboBoxObjetiveSelection
+            // 
+            this.comboBoxObjetiveSelection.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxObjetiveSelection.FormattingEnabled = true;
+            this.comboBoxObjetiveSelection.Location = new System.Drawing.Point(6, 160);
+            this.comboBoxObjetiveSelection.Name = "comboBoxObjetiveSelection";
+            this.comboBoxObjetiveSelection.Size = new System.Drawing.Size(170, 28);
+            this.comboBoxObjetiveSelection.TabIndex = 1;
+            // 
+            // comboBoxAgentSelection
+            // 
+            this.comboBoxAgentSelection.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxAgentSelection.FormattingEnabled = true;
+            this.comboBoxAgentSelection.Location = new System.Drawing.Point(6, 64);
+            this.comboBoxAgentSelection.Name = "comboBoxAgentSelection";
+            this.comboBoxAgentSelection.Size = new System.Drawing.Size(170, 28);
+            this.comboBoxAgentSelection.TabIndex = 0;
             // 
             // buttonRunSimulation
             // 
@@ -219,7 +221,7 @@
         private Button buttonSetAgentAndObjetive;
         private Label labelObjetive;
         private Label labelAgent;
-        private ComboBox comboBox2;
+        private ComboBox comboBoxObjetiveSelection;
         private ComboBox comboBoxAgentSelection;
         private Button buttonRunSimulation;
         private ListBox listBoxLog;
