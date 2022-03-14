@@ -120,6 +120,7 @@
             this.buttonSetAgentAndObjetive.TabIndex = 4;
             this.buttonSetAgentAndObjetive.Text = "Establecer Agente y Objetivo";
             this.buttonSetAgentAndObjetive.UseVisualStyleBackColor = false;
+            this.buttonSetAgentAndObjetive.Click += new System.EventHandler(this.buttonSetAgentAndObjetive_Click);
             // 
             // labelObjetive
             // 
@@ -172,6 +173,7 @@
             this.buttonRunSimulation.Text = "Iniciar Simulación";
             this.buttonRunSimulation.UseVisualStyleBackColor = false;
             this.buttonRunSimulation.Visible = false;
+            this.buttonRunSimulation.Click += new System.EventHandler(this.buttonRunSimulation_Click);
             // 
             // listBoxLog
             // 

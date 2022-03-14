@@ -62,6 +62,34 @@ namespace SemAlgoritmia
             listBoxLog.Visible = false;
         }
 
+        private void buttonSetAgentAndObjetive_Click(object sender, EventArgs e)
+        {
+            if (comboBoxAgentSelection.SelectedItem == null || comboBoxObjetiveSelection.SelectedItem == null) {
+                MessageBox.Show("Selecciona un vertice para añadir al Agente y al Objetivo", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                buttonRunSimulation.Enabled = false;
+                return;
+            }
+
+            createAgentAndObjetive();
+
+            drawCircle(graph.getVertexAt(agent.VertexIndex).Position.X, graph.getVertexAt(agent.VertexIndex).Position.Y, 8, bmpIDs, Color.CornflowerBlue);
+            drawCircle(graph.getVertexAt(objetive.VertexIndex).Position.X, graph.getVertexAt(objetive.VertexIndex).Position.Y, 3, bmpIDs, Color.LightGoldenrodYellow);
+
+            pictureBox.Refresh();
+
+            buttonRunSimulation.Enabled = true;
+            listBoxLog.Visible = false;
+        }
+
+        private void buttonRunSimulation_Click(object sender, EventArgs e)
+        {
+            bmpAnimation = new Bitmap(bmpIDs);
+            pictureBox.Image = bmpAnimation;
+
+            simulation();
+            listBoxLog.Visible = true;
+        }
+
 
 
         bool isWhite(Color color)
@@ -231,6 +259,62 @@ namespace SemAlgoritmia
         }
 
 
+        void createAgentAndObjetive()
+        {
+            drawGraph();
+
+            agent = new Agent(comboBoxAgentSelection.SelectedIndex);
+            objetive = new Objetive(comboBoxObjetiveSelection.SelectedIndex);
+        }
+
+        void moveParticle(List<Point> path)
+        {
+            Graphics g = Graphics.FromImage(bmpAnimation);
+
+            for (int i = 0; i < path.Count; i += 8)
+            { // El incremento es la velocidad a la que se mueve la particula
+                g.Clear(Color.Transparent);
+                drawCircle(path[i].X, path[i].Y, 6, bmpAnimation, Color.CornflowerBlue);
+                pictureBox.Refresh();
+            }
+        }
+
+        void simulation()
+        {
+            Random rand = new Random(DateTime.Now.Millisecond);
+            int edgeSelector;
+            //int jumps = 0;
+
+            drawGraph();
+            drawCircle(graph.getVertexAt(objetive.VertexIndex).Position.X, graph.getVertexAt(objetive.VertexIndex).Position.Y, 3, bmpIDs, Color.LightGoldenrodYellow);
+
+
+            while (agent.VertexIndex != objetive.VertexIndex)
+            {
+                edgeSelector = rand.Next(0, graph.getVertexAt(agent.VertexIndex).EdgesCount);
+
+                VisitedPaths path = new VisitedPaths();
+                path.VertexIndex = agent.VertexIndex;
+                path.EdgeIndex = edgeSelector;
+
+                if (!agent.pathAlreadyVisited(path))
+                {
+                    agent.Path = graph.getVertexAt(path.VertexIndex).getEdgePath(path.EdgeIndex);
+                    moveParticle(agent.Path);
+
+                    agent.VertexIndex = graph.getVertexAt(agent.VertexIndex).getDestinationAt(edgeSelector).Id - 1;
+                    agent.addVisitedPath(path);
+
+                    //jumps++;
+                }
+
+            }
+
+            //MessageBox.Show("Objetivo alcanzado en " + jumps + " Saltos", "Notificación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            MessageBox.Show("Objetivo alcanzado", "Notificación", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            listBoxLog.DataSource = agent.VisitedPaths;
+        }
 
 
     }
