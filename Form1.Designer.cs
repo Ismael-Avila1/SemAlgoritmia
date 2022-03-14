@@ -32,7 +32,7 @@
             this.buttonLoadImage = new System.Windows.Forms.Button();
             this.buttonCreateGraph = new System.Windows.Forms.Button();
             this.treeView = new System.Windows.Forms.TreeView();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.groupBox = new System.Windows.Forms.GroupBox();
             this.comboBoxAgentSelection = new System.Windows.Forms.ComboBox();
             this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.labelAgent = new System.Windows.Forms.Label();
@@ -42,7 +42,7 @@
             this.listBoxLog = new System.Windows.Forms.ListBox();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
-            this.groupBox1.SuspendLayout();
+            this.groupBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // pictureBox
@@ -91,22 +91,22 @@
             this.treeView.TabIndex = 3;
             this.treeView.Visible = false;
             // 
-            // groupBox1
+            // groupBox
             // 
-            this.groupBox1.Controls.Add(this.buttonSetAgentAndObjetive);
-            this.groupBox1.Controls.Add(this.labelObjetive);
-            this.groupBox1.Controls.Add(this.labelAgent);
-            this.groupBox1.Controls.Add(this.comboBox2);
-            this.groupBox1.Controls.Add(this.comboBoxAgentSelection);
-            this.groupBox1.Font = new System.Drawing.Font("Open Sans", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.groupBox1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(251)))), ((int)(((byte)(252)))));
-            this.groupBox1.Location = new System.Drawing.Point(12, 529);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(617, 212);
-            this.groupBox1.TabIndex = 4;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Agentes y Objetivos";
-            this.groupBox1.Visible = false;
+            this.groupBox.Controls.Add(this.buttonSetAgentAndObjetive);
+            this.groupBox.Controls.Add(this.labelObjetive);
+            this.groupBox.Controls.Add(this.labelAgent);
+            this.groupBox.Controls.Add(this.comboBox2);
+            this.groupBox.Controls.Add(this.comboBoxAgentSelection);
+            this.groupBox.Font = new System.Drawing.Font("Open Sans", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.groupBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(251)))), ((int)(((byte)(252)))));
+            this.groupBox.Location = new System.Drawing.Point(12, 529);
+            this.groupBox.Name = "groupBox";
+            this.groupBox.Size = new System.Drawing.Size(617, 212);
+            this.groupBox.TabIndex = 4;
+            this.groupBox.TabStop = false;
+            this.groupBox.Text = "Agentes y Objetivos";
+            this.groupBox.Visible = false;
             // 
             // comboBoxAgentSelection
             // 
@@ -194,7 +194,7 @@
             this.ClientSize = new System.Drawing.Size(1282, 753);
             this.Controls.Add(this.listBoxLog);
             this.Controls.Add(this.buttonRunSimulation);
-            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.groupBox);
             this.Controls.Add(this.treeView);
             this.Controls.Add(this.buttonCreateGraph);
             this.Controls.Add(this.buttonLoadImage);
@@ -203,8 +203,8 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            this.groupBox.ResumeLayout(false);
+            this.groupBox.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -215,7 +215,7 @@
         private Button buttonLoadImage;
         private Button buttonCreateGraph;
         private TreeView treeView;
-        private GroupBox groupBox1;
+        private GroupBox groupBox;
         private Button buttonSetAgentAndObjetive;
         private Label labelObjetive;
         private Label labelAgent;

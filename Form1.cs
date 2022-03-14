@@ -21,7 +21,20 @@ namespace SemAlgoritmia
 
         private void buttonLoadImage_Click(object sender, EventArgs e)
         {
+            openFileDialog.ShowDialog();
 
+            bmpImage = new Bitmap(openFileDialog.FileName);
+            bmpIDs = new Bitmap(openFileDialog.FileName);
+
+            pictureBox.Image = bmpImage;
+
+
+            buttonCreateGraph.Visible = true;
+
+            treeView.Visible = false;
+            groupBox.Visible = false;
+            buttonRunSimulation.Visible = false;
+            listBoxLog.Visible = false;
         }
     }
 }
