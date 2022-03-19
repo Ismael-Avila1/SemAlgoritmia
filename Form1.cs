@@ -91,7 +91,6 @@ namespace SemAlgoritmia
         }
 
 
-
         bool isWhite(Color color)
         {
             if (color.R == 255)
@@ -267,7 +266,7 @@ namespace SemAlgoritmia
             objetive = new Objetive(comboBoxObjetiveSelection.SelectedIndex);
         }
 
-        void moveParticle(List<Point> path)
+        void moveAgent(List<Point> path)
         {
             Graphics g = Graphics.FromImage(bmpAnimation);
 
@@ -297,10 +296,14 @@ namespace SemAlgoritmia
                 path.VertexIndex = agent.VertexIndex;
                 path.EdgeIndex = edgeSelector;
 
-                if (!agent.pathAlreadyVisited(path))
+                //VisitedPaths reversePath = new VisitedPaths();
+                //reversePath.VertexIndex = graph.getVertexAt(path.VertexIndex).getDestinationAt(path.EdgeIndex).Id-1;
+                //reversePath.EdgeIndex = g
+
+                if (!agent.pathAlreadyVisited(path) /*&& !agent.pathAlreadyVisited(reversePath)*/)
                 {
                     agent.Path = graph.getVertexAt(path.VertexIndex).getEdgePath(path.EdgeIndex);
-                    moveParticle(agent.Path);
+                    moveAgent(agent.Path);
 
                     agent.VertexIndex = graph.getVertexAt(agent.VertexIndex).getDestinationAt(edgeSelector).Id - 1;
                     agent.addVisitedPath(path);

@@ -38,12 +38,22 @@ namespace SemAlgoritmia
 
         public Vertex getDestinationAt(int pos) { return edgesList[pos].Destination; }
 
-        public List<Point> getEdgePath(int pos) { return edgesList[pos].Path; }
+        public List<Point> getEdgePath(int pos) { return edgesList[pos].Path; } 
 
         public override string ToString()
         {
             return "Vertice " + id;
         }
+
+        //public int findDestinationVertexIndex(int edgeIndex, int vertexToFind)
+        //{
+        //    for(int i=0; i<edgesList.Count-1; i++) {
+        //        if (edgesList[edgeIndex].Destination.Id - 1 == vertexToFind)
+        //            return edgesList[edgeIndex].Destination.Id - 1;
+        //    }
+        //    return -1;
+        //}
+
 
 
     }
