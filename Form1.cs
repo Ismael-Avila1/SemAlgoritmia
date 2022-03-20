@@ -3,7 +3,7 @@ namespace SemAlgoritmia
     public partial class Form1 : Form
     {
         Bitmap bmpImage;
-        Bitmap bmpIDs;
+        Bitmap bmpGraph;
         Bitmap bmpAnimation;
 
         Agent agent;
@@ -24,7 +24,7 @@ namespace SemAlgoritmia
             openFileDialog.ShowDialog();
 
             bmpImage = new Bitmap(openFileDialog.FileName);
-            bmpIDs = new Bitmap(openFileDialog.FileName);
+            bmpGraph = new Bitmap(openFileDialog.FileName);
 
             pictureBox.Image = bmpImage;
 
@@ -43,10 +43,14 @@ namespace SemAlgoritmia
 
             findCircles();
 
-            graph = new Graph(circleList);
+            for (int i = 0; i < circleList.Count; i++)
+                drawCircle(circleList[i].Center.X, circleList[i].Center.Y, circleList[i].R, bmpImage, Color.Black, 3);
+
+
+            graph = new Graph(circleList, bmpImage);
 
             pictureBox.Image = null;
-            pictureBox.BackgroundImage = bmpIDs;
+            pictureBox.BackgroundImage = bmpGraph;
             pictureBox.BackgroundImageLayout = ImageLayout.Zoom;
 
             fillTree();
@@ -72,8 +76,8 @@ namespace SemAlgoritmia
 
             createAgentAndObjetive();
 
-            drawCircle(graph.getVertexAt(agent.VertexIndex).Position.X, graph.getVertexAt(agent.VertexIndex).Position.Y, 8, bmpIDs, Color.CornflowerBlue);
-            drawCircle(graph.getVertexAt(objetive.VertexIndex).Position.X, graph.getVertexAt(objetive.VertexIndex).Position.Y, 3, bmpIDs, Color.LightGoldenrodYellow);
+            drawCircle(graph.getVertexAt(agent.VertexIndex).Position.X, graph.getVertexAt(agent.VertexIndex).Position.Y, 8, bmpGraph, Color.CornflowerBlue, 4);
+            drawCircle(graph.getVertexAt(objetive.VertexIndex).Position.X, graph.getVertexAt(objetive.VertexIndex).Position.Y, 3, bmpGraph, Color.LightGoldenrodYellow, 4);
 
             pictureBox.Refresh();
 
@@ -83,7 +87,7 @@ namespace SemAlgoritmia
 
         private void buttonRunSimulation_Click(object sender, EventArgs e)
         {
-            bmpAnimation = new Bitmap(bmpIDs);
+            bmpAnimation = new Bitmap(bmpGraph);
             pictureBox.Image = bmpAnimation;
 
             simulation();
@@ -171,20 +175,20 @@ namespace SemAlgoritmia
 
             circleList.Add(new Circle(circleList.Count + 1, p, radius));
 
-            drawCircle(p.X, p.Y, radius, bmpImage, Color.BlueViolet);
+            drawCircle(p.X, p.Y, radius, bmpImage, Color.BlueViolet, 3);
         }
 
-        void drawCircle(int x, int y, int radius, Bitmap bmp, Color color)
+        void drawCircle(int x, int y, int radius, Bitmap bmp, Color color, int extraSize)
         {
             Graphics g = Graphics.FromImage(bmp);
             Brush b = new SolidBrush(color);
 
-            g.FillEllipse(b, x - radius - 5, y - radius - 5, (radius * 2) + 10, (radius * 2) + 10);
+            g.FillEllipse(b, x - radius - extraSize/2, y - radius - extraSize/2, (radius * 2) + extraSize, (radius * 2) + extraSize);
         }
 
         void drawID(int x, int y, int id)
         {
-            Graphics g = Graphics.FromImage(bmpIDs);
+            Graphics g = Graphics.FromImage(bmpGraph);
             Font f = new Font("Cascadia Code", 18);
             SolidBrush b = new SolidBrush(Color.Red);
 
@@ -193,7 +197,7 @@ namespace SemAlgoritmia
 
         void drawLines()
         {
-            Graphics g = Graphics.FromImage(bmpIDs);
+            Graphics g = Graphics.FromImage(bmpGraph);
             Pen p = new Pen(Color.BlueViolet, 1);
 
             Vertex v_i;
@@ -213,7 +217,7 @@ namespace SemAlgoritmia
 
             // dibujar circulos sobre las lineas
             for (int i = 0; i < circleList.Count; i++)
-                drawCircle(circleList[i].Center.X, circleList[i].Center.Y, circleList[i].R, bmpIDs, Color.Black);
+                drawCircle(circleList[i].Center.X, circleList[i].Center.Y, circleList[i].R, bmpGraph, Color.Black, 10);
 
             // dibujar IDs sobre los circulos
             for (int i = 0; i < circleList.Count; i++)
@@ -270,10 +274,9 @@ namespace SemAlgoritmia
         {
             Graphics g = Graphics.FromImage(bmpAnimation);
 
-            for (int i = 0; i < path.Count; i += 8)
-            { // El incremento es la velocidad a la que se mueve la particula
+            for (int i = 0; i < path.Count; i += 8) { // El incremento es la velocidad a la que se mueve la particula
                 g.Clear(Color.Transparent);
-                drawCircle(path[i].X, path[i].Y, 6, bmpAnimation, Color.CornflowerBlue);
+                drawCircle(path[i].X, path[i].Y, 6, bmpAnimation, Color.CornflowerBlue, 4);
                 pictureBox.Refresh();
             }
         }
@@ -285,7 +288,7 @@ namespace SemAlgoritmia
             //int jumps = 0;
 
             drawGraph();
-            drawCircle(graph.getVertexAt(objetive.VertexIndex).Position.X, graph.getVertexAt(objetive.VertexIndex).Position.Y, 3, bmpIDs, Color.LightGoldenrodYellow);
+            drawCircle(graph.getVertexAt(objetive.VertexIndex).Position.X, graph.getVertexAt(objetive.VertexIndex).Position.Y, 3, bmpGraph, Color.LightGoldenrodYellow, 4);
 
 
             while (agent.VertexIndex != objetive.VertexIndex)
@@ -308,7 +311,6 @@ namespace SemAlgoritmia
                     agent.VertexIndex = graph.getVertexAt(agent.VertexIndex).getDestinationAt(edgeSelector).Id - 1;
                     agent.addVisitedPath(path);
 
-                    //jumps++;
                 }
 
             }

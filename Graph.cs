@@ -15,7 +15,7 @@ namespace SemAlgoritmia
             vertexList = new List<Vertex>();
         }
 
-        public Graph(List<Circle> circlesList)
+        public Graph(List<Circle> circlesList, Bitmap bmp)
         {
             vertexList = new List<Vertex>();
 
@@ -28,11 +28,22 @@ namespace SemAlgoritmia
 
             for (int i = 0; i < vertexList.Count; i++) {
                 vertexOrigin = vertexList[i];
+                
                 for (int j = i + 1; j < vertexList.Count; j++) {
                     vertexDestination = vertexList[j];
 
-                    vertexOrigin.addEdge(vertexDestination, 0, makePath(vertexOrigin, vertexDestination));
-                    vertexDestination.addEdge(vertexOrigin, 0, makePath(vertexDestination, vertexOrigin));
+                    List<Point> pathOriginToDestination;
+
+                    pathOriginToDestination = makePath(vertexOrigin, vertexDestination);
+
+                    if(existEdge(pathOriginToDestination, bmp)) {
+
+                        List<Point> pathDestinationToOrigin;
+
+                        pathDestinationToOrigin = makePath(vertexDestination, vertexOrigin);
+                        vertexOrigin.addEdge(vertexDestination, 0, pathOriginToDestination);
+                        vertexDestination.addEdge(vertexOrigin, 0, pathDestinationToOrigin);
+                    }
                 }
             }
 
@@ -99,6 +110,54 @@ namespace SemAlgoritmia
 
             return path;
         }
+
+
+        bool isWhite(Color color)
+        {
+            if (color.R == 255)
+                if (color.G == 255)
+                    if (color.B == 255)
+                        return true;
+            return false;
+        }
+
+        bool isBlack(Color color)
+        {
+            if (color.R == 0)
+                if (color.G == 0)
+                    if (color.B == 0)
+                        return true;
+            return false;
+        }
+
+        bool existEdge(List<Point> path, Bitmap bmp)
+        {
+            int i = 0;
+
+            while (isBlack(bmp.GetPixel(path[i].X, path[i].Y))) {  // mientras estemos dentro del circulo negro de origen
+                i++;
+            }
+            // ya salimos del circulo de origen
+
+
+            while(isWhite(bmp.GetPixel(path[i].X, path[i].Y))) { // mientras no encontremos algo diferente de blanco
+                if (!isWhite(bmp.GetPixel(path[i].X, path[i].Y)) && !isBlack(bmp.GetPixel(path[i].X, path[i].Y))) // color diferente de negro y blanco
+                    return false; // Se encontro con un obstaculo
+                
+                i++;
+            } // llegamos a un circulo
+
+            while(i < path.Count-1) {
+                if (isWhite(bmp.GetPixel(path[i].X, path[i].Y))) // llegamos a un pixel blanco, o sea, no era el ciruclo destino y i está afuera del circulo
+                    return false;
+                
+                i++;
+            }
+
+            return true;
+
+        }
+
 
     }
 }
