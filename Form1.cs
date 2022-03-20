@@ -303,15 +303,15 @@ namespace SemAlgoritmia
                 //reversePath.VertexIndex = graph.getVertexAt(path.VertexIndex).getDestinationAt(path.EdgeIndex).Id-1;
                 //reversePath.EdgeIndex = g
 
-                if (!agent.pathAlreadyVisited(path) /*&& !agent.pathAlreadyVisited(reversePath)*/)
-                {
-                    agent.Path = graph.getVertexAt(path.VertexIndex).getEdgePath(path.EdgeIndex);
-                    moveAgent(agent.Path);
+                //if (!agent.pathAlreadyVisited(path) /*&& !agent.pathAlreadyVisited(reversePath)*/)
+                //{
+                agent.Path = graph.getVertexAt(path.VertexIndex).getEdgePath(path.EdgeIndex);
+                moveAgent(agent.Path);
 
-                    agent.VertexIndex = graph.getVertexAt(agent.VertexIndex).getDestinationAt(edgeSelector).Id - 1;
-                    agent.addVisitedPath(path);
+                agent.VertexIndex = graph.getVertexAt(agent.VertexIndex).getDestinationAt(edgeSelector).Id - 1;
+                agent.addVisitedPath(path);
 
-                }
+                //}
 
             }
 
