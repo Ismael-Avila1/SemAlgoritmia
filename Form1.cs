@@ -12,6 +12,8 @@ namespace SemAlgoritmia
         List<Circle> circleList;
         Graph graph;
 
+        MyTree tree;
+
         public Form1()
         {
             InitializeComponent();
@@ -90,7 +92,9 @@ namespace SemAlgoritmia
             bmpAnimation = new Bitmap(bmpGraph);
             pictureBox.Image = bmpAnimation;
 
-            simulation();
+            //simulation();
+            DFS();
+            tree.inorder(labelinorder);
             listBoxLog.Visible = true;
         }
 
@@ -274,7 +278,7 @@ namespace SemAlgoritmia
         {
             Graphics g = Graphics.FromImage(bmpAnimation);
 
-            for (int i = 0; i < path.Count; i += 8) { // El incremento es la velocidad a la que se mueve la particula
+            for (int i = 0; i < path.Count; i += 8) { // El incremento es la velocidad a la que se mueve el agente
                 g.Clear(Color.Transparent);
                 drawCircle(path[i].X, path[i].Y, 6, bmpAnimation, Color.CornflowerBlue, 4);
                 pictureBox.Refresh();
@@ -285,7 +289,6 @@ namespace SemAlgoritmia
         {
             Random rand = new Random(DateTime.Now.Millisecond);
             int edgeSelector;
-            //int jumps = 0;
 
             drawGraph();
             drawCircle(graph.getVertexAt(objetive.VertexIndex).Position.X, graph.getVertexAt(objetive.VertexIndex).Position.Y, 3, bmpGraph, Color.LightGoldenrodYellow, 4);
@@ -298,20 +301,12 @@ namespace SemAlgoritmia
                 VisitedPaths path = new VisitedPaths();
                 path.VertexIndex = agent.VertexIndex;
                 path.EdgeIndex = edgeSelector;
-
-                //VisitedPaths reversePath = new VisitedPaths();
-                //reversePath.VertexIndex = graph.getVertexAt(path.VertexIndex).getDestinationAt(path.EdgeIndex).Id-1;
-                //reversePath.EdgeIndex = g
-
-                //if (!agent.pathAlreadyVisited(path) /*&& !agent.pathAlreadyVisited(reversePath)*/)
-                //{
+                
                 agent.Path = graph.getVertexAt(path.VertexIndex).getEdgePath(path.EdgeIndex);
                 moveAgent(agent.Path);
 
                 agent.VertexIndex = graph.getVertexAt(agent.VertexIndex).getDestinationAt(edgeSelector).Id - 1;
                 agent.addVisitedPath(path);
-
-                //}
 
             }
 
@@ -319,6 +314,44 @@ namespace SemAlgoritmia
             MessageBox.Show("Objetivo alcanzado", "Notificación", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             listBoxLog.DataSource = agent.VisitedPaths;
+        }
+
+        void DFS()
+        {
+            Vertex v_inicial = graph.getVertexAt(agent.VertexIndex);
+            Vertex v_o = v_inicial;
+            Vertex v_obj = graph.getVertexAt(objetive.VertexIndex);
+
+            tree = new MyTree(v_inicial);
+
+            bool explore = true;
+
+            //MyTreeNode destinationLeaf;
+
+            DFS(v_o, agent.VisitedVertices, tree.Root, explore, v_obj/*, destinationLeaf*/);
+
+        }
+
+        void DFS(Vertex v_o, List<Vertex> visited, MyTreeNode root, bool explore, Vertex v_obj/*, MyTreeNode destinationLeaf*/)
+        {
+            visited.Add(v_o);
+
+            if(v_o.Id == v_obj.Id) // si ya se llego al objetivo
+                //destinationLeaf = root;
+                explore = false;
+
+            for(int i=0; i<v_o.EdgesCount; i++) {
+                if (!explore)
+                    return;
+
+                if(!agent.isVertexVisited(v_o.getDestinationAt(i))) {
+                    MyTreeNode child = new MyTreeNode(v_o.getDestinationAt(i), root);
+                    root.addChild(child);
+                    DFS(v_o.getDestinationAt(i), visited, child, explore, v_obj);
+                }
+            }
+
+            return;
         }
 
 

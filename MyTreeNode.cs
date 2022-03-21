@@ -25,9 +25,9 @@ namespace SemAlgoritmia
             this.father = father;
         }
 
-        public void addChild(Vertex data)
+        public void addChild(MyTreeNode child)
         {
-            children.Add(new MyTreeNode(data, this));
+            children.Add(child);
         }
 
         public MyTreeNode getChildAt(int pos)

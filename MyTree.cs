@@ -20,20 +20,29 @@ namespace SemAlgoritmia
             root = new MyTreeNode(data, null);
         }
 
-        public void insert(Vertex data, MyTreeNode node)
+        //public void insert(Vertex data, MyTreeNode node)
+        //{
+        //    node.addChild(data);
+        //}
+
+        public void inorder(Label lbl)
         {
-            node.addChild(data);
+            inorder(root, lbl);
         }
 
-        public void inorder(MyTreeNode root)
+        void inorder(MyTreeNode root, Label lbl)
         {
-            Console.Write(root.Data.Id.ToString());
+            //Console.Write(root.Data.Id.ToString());
+            lbl.Text = lbl.Text + root.Data.Id.ToString() + ", ";
 
             for(int i=0; i< root.ChildrenCount; i++) {
-                inorder(root.getChildAt(i));
-                Console.Write(root.Data.Id.ToString());
+                inorder(root.getChildAt(i), lbl);
+                //Console.Write(root.Data.Id.ToString());
+                lbl.Text = lbl.Text + root.Data.Id.ToString() + ", ";
             }
         }
 
+
+        public MyTreeNode Root { get { return root; } }
     }
 }
