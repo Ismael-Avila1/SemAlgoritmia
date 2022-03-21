@@ -13,16 +13,21 @@ namespace SemAlgoritmia
 
         List<VisitedPaths> visitedPaths;
 
+        List<Vertex> visitedVertices;
+
+
         public Agent()
         {
             path = new List<Point>();
             visitedPaths = new List<VisitedPaths>();
+            visitedVertices = new List<Vertex>();
         }
 
         public Agent(int vertexIndex)
         {
             path = new List<Point>();
             visitedPaths = new List<VisitedPaths>();
+            visitedVertices = new List<Vertex>();
 
             this.vertexIndex = vertexIndex;
         }
@@ -52,6 +57,22 @@ namespace SemAlgoritmia
 
             return false;
         }
+
+        public void addVisitedVertex(Vertex vertex)
+        {
+            visitedVertices.Add(vertex);
+        }
+
+        public bool isVertexVisited(Vertex vertex)
+        {
+            for(int i=0; i < visitedVertices.Count; i++)
+                if (visitedVertices[i].Id == vertex.Id)
+                    return true;
+            
+            return false;
+        }
+
+        public List<Vertex> VisitedVertices { get { return visitedVertices; } }
 
     }
 }
