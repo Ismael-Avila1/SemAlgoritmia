@@ -93,7 +93,7 @@ namespace SemAlgoritmia
             pictureBox.Image = bmpAnimation;
 
             //simulation();
-            DFS();
+            BFS();
             tree.inorder(labelinorder);
             listBoxLog.Visible = true;
         }
@@ -318,6 +318,8 @@ namespace SemAlgoritmia
 
         void DFS()
         {
+            agent.VisitedVertices.Clear();
+
             Vertex v_inicial = graph.getVertexAt(agent.VertexIndex);
             Vertex v_o = v_inicial;
             Vertex v_obj = graph.getVertexAt(objetive.VertexIndex);
@@ -325,6 +327,7 @@ namespace SemAlgoritmia
             tree = new MyTree(v_inicial);
 
             bool explore = true;
+
 
             //MyTreeNode destinationLeaf;
 
@@ -352,6 +355,60 @@ namespace SemAlgoritmia
             }
 
             return;
+        }
+
+
+        void BFS()
+        {
+            agent.VisitedVertices.Clear();
+            
+            Vertex v_inicial = graph.getVertexAt(agent.VertexIndex);
+            Vertex v_o = v_inicial;
+            Vertex v_obj = graph.getVertexAt(objetive.VertexIndex);
+            
+            Queue<Vertex> q = new Queue<Vertex>();
+
+            agent.VisitedVertices.Add(v_o);
+            q.Enqueue(v_o);
+
+            tree = new MyTree(v_inicial);
+
+            MyTreeNode destinationLeaf = new MyTreeNode();
+
+            bool explore = true;
+
+            BFS(q, agent.VisitedVertices, v_o, tree.Root, v_obj, tree, destinationLeaf);
+
+        }
+
+        void BFS(Queue<Vertex> q, List<Vertex> visited, Vertex v_o, MyTreeNode root, Vertex v_obj, MyTree tree, MyTreeNode destinationLeaf)
+        {
+            if(q.Count == 0)
+                return;
+
+            v_o = q.Dequeue();
+            root = tree.find(root, v_o);
+
+            for(int i=0; i<v_o.EdgesCount; i++) {
+                if(!agent.isVertexVisited(v_o.getDestinationAt(i))) {
+                    q.Enqueue(v_o.getDestinationAt(i));
+
+                    MyTreeNode child = new MyTreeNode(v_o.getDestinationAt(i), root);
+                    root.addChild(child);
+
+                    visited.Add(v_o.getDestinationAt(i));
+
+                    if (v_o.getDestinationAt(i) == v_obj) {
+                        destinationLeaf = tree.find(root, v_o.getDestinationAt(i));
+                        q.Clear();
+                        return;
+                    }
+                }
+            }
+
+            BFS(q, visited, v_o, root, v_obj, tree, destinationLeaf);
+
+
         }
 
 
