@@ -42,6 +42,20 @@ namespace SemAlgoritmia
             }
         }
 
+        public MyTreeNode find(MyTreeNode node, Vertex v)
+        {
+            if(node.Data.Id == v.Id)
+                return node;
+
+            for(int i=0;i<node.ChildrenCount;i++) {
+                MyTreeNode child = node.getChildAt(i);
+                if (child.Data == v)
+                    return child;
+                find(child, v);
+            }
+            return null;
+        }
+
 
         public MyTreeNode Root { get { return root; } }
     }
