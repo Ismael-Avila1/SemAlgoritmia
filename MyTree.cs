@@ -25,20 +25,20 @@ namespace SemAlgoritmia
         //    node.addChild(data);
         //}
 
-        public void inorder(Label lbl)
+        public List<Vertex> inorder()
         {
-            inorder(root, lbl);
+            List<Vertex> vertices = new List<Vertex>();
+            inorder(root, vertices);
+            return vertices;
         }
 
-        void inorder(MyTreeNode root, Label lbl)
+        void inorder(MyTreeNode root, List<Vertex> vertices)
         {
-            //Console.Write(root.Data.Id.ToString());
-            lbl.Text = lbl.Text + root.Data.Id.ToString() + ", ";
+            vertices.Add(root.Data);
 
             for(int i=0; i< root.ChildrenCount; i++) {
-                inorder(root.getChildAt(i), lbl);
-                //Console.Write(root.Data.Id.ToString());
-                lbl.Text = lbl.Text + root.Data.Id.ToString() + ", ";
+                inorder(root.getChildAt(i), vertices);
+                vertices.Add(root.Data);
             }
         }
 

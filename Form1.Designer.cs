@@ -41,7 +41,6 @@
             this.buttonRunSimulation = new System.Windows.Forms.Button();
             this.listBoxLog = new System.Windows.Forms.ListBox();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
-            this.labelinorder = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             this.groupBox.SuspendLayout();
             this.SuspendLayout();
@@ -191,23 +190,12 @@
             // 
             this.openFileDialog.FileName = "openFileDialog1";
             // 
-            // labelinorder
-            // 
-            this.labelinorder.AutoSize = true;
-            this.labelinorder.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.labelinorder.ForeColor = System.Drawing.Color.White;
-            this.labelinorder.Location = new System.Drawing.Point(655, 530);
-            this.labelinorder.Name = "labelinorder";
-            this.labelinorder.Size = new System.Drawing.Size(0, 17);
-            this.labelinorder.TabIndex = 7;
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(50)))), ((int)(((byte)(65)))));
             this.ClientSize = new System.Drawing.Size(1282, 753);
-            this.Controls.Add(this.labelinorder);
             this.Controls.Add(this.listBoxLog);
             this.Controls.Add(this.buttonRunSimulation);
             this.Controls.Add(this.groupBox);
@@ -222,7 +210,6 @@
             this.groupBox.ResumeLayout(false);
             this.groupBox.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -241,6 +228,5 @@
         private Button buttonRunSimulation;
         private ListBox listBoxLog;
         private OpenFileDialog openFileDialog;
-        private Label labelinorder;
     }
 }

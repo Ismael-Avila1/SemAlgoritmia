@@ -93,8 +93,8 @@ namespace SemAlgoritmia
             pictureBox.Image = bmpAnimation;
 
             //simulation();
-            BFS();
-            tree.inorder(labelinorder);
+            DFS();
+            tree.inorder();
             listBoxLog.Visible = true;
         }
 
