@@ -45,14 +45,14 @@ namespace SemAlgoritmia
             return "Vertice " + id;
         }
 
-        //public int findDestinationVertexIndex(int edgeIndex, int vertexToFind)
-        //{
-        //    for(int i=0; i<edgesList.Count-1; i++) {
-        //        if (edgesList[edgeIndex].Destination.Id - 1 == vertexToFind)
-        //            return edgesList[edgeIndex].Destination.Id - 1;
-        //    }
-        //    return -1;
-        //}
+        public int findDestinationVertexIndex(Vertex vertexOrigin, Vertex vertexDestination)
+        {
+            for (int i=0; i < vertexOrigin.EdgesCount; i++) {
+                if(vertexOrigin.getDestinationAt(i) == vertexDestination)
+                    return i;
+            }
+            return -1;
+        }
 
 
 

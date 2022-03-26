@@ -12,7 +12,8 @@ namespace SemAlgoritmia
         List<Circle> circleList;
         Graph graph;
 
-        MyTree tree;
+        MyTree depthTree;
+        MyTree breadthTree;
 
         public Form1()
         {
@@ -36,7 +37,6 @@ namespace SemAlgoritmia
             treeView.Visible = false;
             groupBox.Visible = false;
             buttonRunSimulation.Visible = false;
-            listBoxLog.Visible = false;
         }
 
         private void buttonCreateGraph_Click(object sender, EventArgs e)
@@ -65,7 +65,6 @@ namespace SemAlgoritmia
             buttonRunSimulation.Visible = true;
 
             buttonRunSimulation.Enabled = false;
-            listBoxLog.Visible = false;
         }
 
         private void buttonSetAgentAndObjetive_Click(object sender, EventArgs e)
@@ -84,7 +83,6 @@ namespace SemAlgoritmia
             pictureBox.Refresh();
 
             buttonRunSimulation.Enabled = true;
-            listBoxLog.Visible = false;
         }
 
         private void buttonRunSimulation_Click(object sender, EventArgs e)
@@ -92,10 +90,7 @@ namespace SemAlgoritmia
             bmpAnimation = new Bitmap(bmpGraph);
             pictureBox.Image = bmpAnimation;
 
-            //simulation();
-            DFS();
-            tree.inorder();
-            listBoxLog.Visible = true;
+            simulation();
         }
 
 
@@ -287,33 +282,22 @@ namespace SemAlgoritmia
 
         void simulation()
         {
-            Random rand = new Random(DateTime.Now.Millisecond);
-            int edgeSelector;
-
             drawGraph();
             drawCircle(graph.getVertexAt(objetive.VertexIndex).Position.X, graph.getVertexAt(objetive.VertexIndex).Position.Y, 3, bmpGraph, Color.LightGoldenrodYellow, 4);
 
 
-            while (agent.VertexIndex != objetive.VertexIndex)
-            {
-                edgeSelector = rand.Next(0, graph.getVertexAt(agent.VertexIndex).EdgesCount);
+            DFS();
+            List<Vertex> depthVertices = depthTree.inorder();
 
-                VisitedPaths path = new VisitedPaths();
-                path.VertexIndex = agent.VertexIndex;
-                path.EdgeIndex = edgeSelector;
-                
-                agent.Path = graph.getVertexAt(path.VertexIndex).getEdgePath(path.EdgeIndex);
-                moveAgent(agent.Path);
+            for (int i = 0; i < depthVertices.Count; i++) {
+                if (depthVertices[i].Id == objetive.VertexIndex + 1) {
+                    MessageBox.Show("Objetivo alcanzado", "Notificación", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
 
-                agent.VertexIndex = graph.getVertexAt(agent.VertexIndex).getDestinationAt(edgeSelector).Id - 1;
-                agent.addVisitedPath(path);
-
+                moveAgent(depthVertices[i].getEdgePath(depthVertices[i].findDestinationVertexIndex(graph.getVertexAt(depthVertices[i].Id - 1), graph.getVertexAt(depthVertices[i + 1].Id - 1))));
             }
 
-            //MessageBox.Show("Objetivo alcanzado en " + jumps + " Saltos", "Notificación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            MessageBox.Show("Objetivo alcanzado", "Notificación", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-            listBoxLog.DataSource = agent.VisitedPaths;
         }
 
         void DFS()
@@ -324,15 +308,13 @@ namespace SemAlgoritmia
             Vertex v_o = v_inicial;
             Vertex v_obj = graph.getVertexAt(objetive.VertexIndex);
 
-            tree = new MyTree(v_inicial);
+            depthTree = new MyTree(v_inicial);
 
             bool explore = true;
 
-
             //MyTreeNode destinationLeaf;
 
-            DFS(v_o, agent.VisitedVertices, tree.Root, explore, v_obj/*, destinationLeaf*/);
-
+            DFS(v_o, agent.VisitedVertices, depthTree.Root, explore, v_obj/*, destinationLeaf*/);
         }
 
         void DFS(Vertex v_o, List<Vertex> visited, MyTreeNode root, bool explore, Vertex v_obj/*, MyTreeNode destinationLeaf*/)
@@ -340,8 +322,8 @@ namespace SemAlgoritmia
             visited.Add(v_o);
 
             if(v_o.Id == v_obj.Id) // si ya se llego al objetivo
-                //destinationLeaf = root;
                 explore = false;
+                //destinationLeaf = root;
 
             for(int i=0; i<v_o.EdgesCount; i++) {
                 if (!explore)
@@ -371,13 +353,13 @@ namespace SemAlgoritmia
             agent.VisitedVertices.Add(v_o);
             q.Enqueue(v_o);
 
-            tree = new MyTree(v_inicial);
+            breadthTree = new MyTree(v_inicial);
 
             MyTreeNode destinationLeaf = new MyTreeNode();
 
             bool explore = true;
 
-            BFS(q, agent.VisitedVertices, v_o, tree.Root, v_obj, tree, destinationLeaf);
+            BFS(q, agent.VisitedVertices, v_o, breadthTree.Root, v_obj, breadthTree, destinationLeaf);
 
         }
 
@@ -407,8 +389,6 @@ namespace SemAlgoritmia
             }
 
             BFS(q, visited, v_o, root, v_obj, tree, destinationLeaf);
-
-
         }
 
 

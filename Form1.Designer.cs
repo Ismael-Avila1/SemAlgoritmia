@@ -39,7 +39,6 @@
             this.comboBoxObjetiveSelection = new System.Windows.Forms.ComboBox();
             this.comboBoxAgentSelection = new System.Windows.Forms.ComboBox();
             this.buttonRunSimulation = new System.Windows.Forms.Button();
-            this.listBoxLog = new System.Windows.Forms.ListBox();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             this.groupBox.SuspendLayout();
@@ -175,17 +174,6 @@
             this.buttonRunSimulation.Visible = false;
             this.buttonRunSimulation.Click += new System.EventHandler(this.buttonRunSimulation_Click);
             // 
-            // listBoxLog
-            // 
-            this.listBoxLog.Font = new System.Drawing.Font("Open Sans", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.listBoxLog.FormattingEnabled = true;
-            this.listBoxLog.ItemHeight = 20;
-            this.listBoxLog.Location = new System.Drawing.Point(914, 567);
-            this.listBoxLog.Name = "listBoxLog";
-            this.listBoxLog.Size = new System.Drawing.Size(356, 164);
-            this.listBoxLog.TabIndex = 6;
-            this.listBoxLog.Visible = false;
-            // 
             // openFileDialog
             // 
             this.openFileDialog.FileName = "openFileDialog1";
@@ -196,7 +184,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(50)))), ((int)(((byte)(65)))));
             this.ClientSize = new System.Drawing.Size(1282, 753);
-            this.Controls.Add(this.listBoxLog);
             this.Controls.Add(this.buttonRunSimulation);
             this.Controls.Add(this.groupBox);
             this.Controls.Add(this.treeView);
@@ -226,7 +213,6 @@
         private ComboBox comboBoxObjetiveSelection;
         private ComboBox comboBoxAgentSelection;
         private Button buttonRunSimulation;
-        private ListBox listBoxLog;
         private OpenFileDialog openFileDialog;
     }
 }
