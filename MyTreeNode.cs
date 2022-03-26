@@ -46,5 +46,10 @@ namespace SemAlgoritmia
             get { return children.Count; }
         }
 
+        public MyTreeNode Father
+        {
+            get { return father; }
+        }
+
     }
 }
