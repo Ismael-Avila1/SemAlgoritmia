@@ -360,7 +360,7 @@ namespace SemAlgoritmia
             Vertex v_inicial = graph.getVertexAt(agent.VertexIndex);
             Vertex v_o = v_inicial;
             Vertex v_obj = graph.getVertexAt(objetive.VertexIndex);
-            
+
             Queue<Vertex> q = new Queue<Vertex>();
 
             agent.VisitedVertices.Add(v_o);
@@ -382,7 +382,7 @@ namespace SemAlgoritmia
                 return;
 
             v_o = q.Dequeue();
-            root = tree.find(root, v_o);
+            root = tree.find(tree.Root, v_o);
 
             for(int i=0; i<v_o.EdgesCount; i++) {
                 if(!agent.isVertexVisited(v_o.getDestinationAt(i))) {
@@ -393,8 +393,8 @@ namespace SemAlgoritmia
 
                     visited.Add(v_o.getDestinationAt(i));
 
-                    if (v_o.getDestinationAt(i) == v_obj) {
-                        destinationLeaf = tree.find(root, v_o.getDestinationAt(i));
+                    if(v_o.getDestinationAt(i) == v_obj) {
+                        destinationLeaf = tree.find(tree.Root, v_o.getDestinationAt(i));
                         q.Clear();
                         return;
                     }
