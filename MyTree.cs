@@ -49,7 +49,7 @@ namespace SemAlgoritmia
 
             for(int i=0;i<node.ChildrenCount;i++) {
                 MyTreeNode child = node.getChildAt(i);
-                if (child.Data == v)
+                if (child.Data.Id == v.Id)
                     return child;
                 find(child, v);
             }
