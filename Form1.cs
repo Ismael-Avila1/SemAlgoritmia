@@ -302,7 +302,7 @@ namespace SemAlgoritmia
             // se recorre el arbol en anchura para obtener la mejor secuencia para llegar al objetivo
             List<Vertex> bestSecuence = breadthVertices();
 
-            Graphics g = Graphics.FromImage(bmpGraph);
+            Graphics g = Graphics.FromImage(bmpAnimation);
             Pen p = new Pen(Color.LimeGreen, 5);
 
             for (int j=0; j<bestSecuence.Count-1; j++) {
