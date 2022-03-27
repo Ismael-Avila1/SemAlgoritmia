@@ -48,10 +48,10 @@ namespace SemAlgoritmia
                 return node;
 
             for(int i=0;i<node.ChildrenCount;i++) {
-                MyTreeNode child = node.getChildAt(i);
-                if (child.Data.Id == v.Id)
-                    return child;
-                find(child, v);
+                MyTreeNode aux = node.getChildAt(i);
+                if (aux.Data.Id == v.Id)
+                    return aux;
+                find(aux, v);
             }
             return null;
         }
