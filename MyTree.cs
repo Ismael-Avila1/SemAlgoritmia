@@ -47,11 +47,17 @@ namespace SemAlgoritmia
             if(node.Data.Id == v.Id)
                 return node;
 
+            MyTreeNode foundNode;
+
             for(int i=0;i<node.ChildrenCount;i++) {
                 MyTreeNode aux = node.getChildAt(i);
-                if (aux.Data.Id == v.Id)
-                    return aux;
-                find(aux, v);
+                //if (aux.Data.Id == v.Id)
+                //    return aux;
+
+                foundNode = find(aux, v);
+                if(foundNode != null) {
+                    return foundNode;
+                }
             }
             return null;
         }
