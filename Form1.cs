@@ -289,8 +289,8 @@ namespace SemAlgoritmia
             DFS();
             List<Vertex> depthVertices = depthTree.inorder();
 
-            for (int i = 0; i < depthVertices.Count; i++) {
-                if (depthVertices[i].Id == objetive.VertexIndex + 1) {
+            for(int i = 0; i < depthVertices.Count; i++) {
+                if(depthVertices[i].Id == objetive.VertexIndex + 1) {
                     MessageBox.Show("Objetivo alcanzado", "Notificación", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     break;
                 }
@@ -408,27 +408,15 @@ namespace SemAlgoritmia
         {
             List<Vertex> vertices = new List<Vertex>();
 
-            breadthVertices(vertices, breadthTree.Root);
+            MyTreeNode aux = breadthTree.find(breadthTree.Root, graph.getVertexAt(objetive.VertexIndex));
+
+            while(aux != null) {
+                vertices.Add(aux.Data);
+                aux = aux.Father;
+            }
 
             return vertices;
         }
-
-        void breadthVertices(List<Vertex> vertices, MyTreeNode root)
-        {
-            for (int i = 0; i < root.ChildrenCount; i++) {
-                if(root.getChildAt(i).Data == graph.getVertexAt(objetive.VertexIndex)) { // Si llegamos al nodo buscado
-                    MyTreeNode aux = root.getChildAt(i);
-                    while(aux != null) {
-                        vertices.Add(aux.Data);
-                        aux = aux.Father;
-                    }
-                    return;
-                }
-                breadthVertices(vertices, root.getChildAt(i));
-            }
-        }
-
-
 
 
 
