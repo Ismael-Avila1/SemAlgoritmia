@@ -290,6 +290,11 @@ namespace SemAlgoritmia
             List<Vertex> depthVertices = depthTree.inorder();
 
             for(int i = 0; i < depthVertices.Count; i++) {
+                if(i == depthVertices.Count-1) {
+                    MessageBox.Show("El objetivo no se encuentra en Sub-Grafo", "Notificación", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
                 if(depthVertices[i].Id == objetive.VertexIndex + 1) {
                     MessageBox.Show("Objetivo alcanzado", "Notificación", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     break;
@@ -325,18 +330,15 @@ namespace SemAlgoritmia
 
             bool explore = true;
 
-            //MyTreeNode destinationLeaf;
-
-            DFS(v_o, agent.VisitedVertices, depthTree.Root, explore, v_obj/*, destinationLeaf*/);
+            DFS(v_o, agent.VisitedVertices, depthTree.Root, explore, v_obj);
         }
 
-        void DFS(Vertex v_o, List<Vertex> visited, MyTreeNode root, bool explore, Vertex v_obj/*, MyTreeNode destinationLeaf*/)
+        void DFS(Vertex v_o, List<Vertex> visited, MyTreeNode root, bool explore, Vertex v_obj)
         {
             visited.Add(v_o);
 
             if(v_o.Id == v_obj.Id) // si ya se llego al objetivo
                 explore = false;
-                //destinationLeaf = root;
 
             for(int i=0; i<v_o.EdgesCount; i++) {
                 if (!explore)
