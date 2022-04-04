@@ -289,13 +289,16 @@ namespace SemAlgoritmia
             DFS();
             List<Vertex> depthVertices = depthTree.inorder();
 
-            for(int i = 0; i < depthVertices.Count; i++) {
-                if(i == depthVertices.Count-1) {
+            for (int i = 0; i < depthVertices.Count; i++)
+            {
+                if (i == depthVertices.Count - 1)
+                {
                     MessageBox.Show("El objetivo no se encuentra en Sub-Grafo", "Notificación", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
-                if(depthVertices[i].Id == objetive.VertexIndex + 1) {
+                if (depthVertices[i].Id == objetive.VertexIndex + 1)
+                {
                     MessageBox.Show("Objetivo alcanzado", "Notificación", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     break;
                 }
@@ -310,7 +313,8 @@ namespace SemAlgoritmia
             Graphics g = Graphics.FromImage(bmpAnimation);
             Pen p = new Pen(Color.LimeGreen, 5);
 
-            for (int j=0; j<bestSecuence.Count-1; j++) {
+            for (int j = 0; j < bestSecuence.Count - 1; j++)
+            {
                 g.DrawLine(p, bestSecuence[j].Position, bestSecuence[j + 1].Position);
             }
             pictureBox.Refresh();
@@ -333,25 +337,60 @@ namespace SemAlgoritmia
             DFS(v_o, agent.VisitedVertices, depthTree.Root, explore, v_obj);
         }
 
-        void DFS(Vertex v_o, List<Vertex> visited, MyTreeNode root, bool explore, Vertex v_obj)
+        Vertex DFS(Vertex v_o, List<Vertex> visited, MyTreeNode root, bool exist, Vertex v_obj)
         {
             visited.Add(v_o);
 
-            if(v_o.Id == v_obj.Id) // si ya se llego al objetivo
-                explore = false;
+            if (v_o.Id == v_obj.Id) // si ya se llego al objetivo
+                return v_o;
+
+            List<Vertex> v_oNotVisited = new List<Vertex>();
 
             for(int i=0; i<v_o.EdgesCount; i++) {
-                if (!explore)
-                    return;
+                exist = false;
 
-                if(!agent.isVertexVisited(v_o.getDestinationAt(i))) {
-                    MyTreeNode child = new MyTreeNode(v_o.getDestinationAt(i), root);
-                    root.addChild(child);
-                    DFS(v_o.getDestinationAt(i), visited, child, explore, v_obj);
+                Vertex v_i = v_o.getDestinationAt(i);
+                for(int j=0; j<visited.Count; j++) {
+                    if(visited[j] == v_i) {
+                        exist = true;
+                        break;
+                    }
                 }
+                if(!exist) {
+                    v_oNotVisited.Add(v_i);
+                }
+
             }
 
-            return;
+            Random rand = new Random(DateTime.Now.Millisecond);
+            
+            while(v_oNotVisited.Count > 0) {
+                int r = rand.Next(0, v_oNotVisited.Count);
+
+                MyTreeNode child = new MyTreeNode(v_oNotVisited[r], root);
+                root.addChild(child);
+
+                Vertex vSol = DFS(v_oNotVisited[r], visited, child, exist, v_obj);
+
+                v_oNotVisited.RemoveAt(r);
+
+                if (vSol != null)
+                    return vSol;
+            }
+            return null;
+
+            //for(int i=0; i<v_o.EdgesCount; i++) {
+            //    if (!explore)
+            //        return;
+
+            //    if(!agent.isVertexVisited(v_o.getDestinationAt(i))) {
+            //        MyTreeNode child = new MyTreeNode(v_o.getDestinationAt(i), root);
+            //        root.addChild(child);
+            //        DFS(v_o.getDestinationAt(i), visited, child, explore, v_obj);
+            //    }
+            //}
+
+            //return;
         }
 
 
