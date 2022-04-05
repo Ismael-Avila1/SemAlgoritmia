@@ -356,9 +356,8 @@ namespace SemAlgoritmia
                         break;
                     }
                 }
-                if(!exist) {
+                if(!exist)
                     v_oNotVisited.Add(v_i);
-                }
 
             }
 
@@ -372,10 +371,26 @@ namespace SemAlgoritmia
 
                 Vertex vSol = DFS(v_oNotVisited[r], visited, child, exist, v_obj);
 
-                v_oNotVisited.RemoveAt(r);
-
                 if (vSol != null)
                     return vSol;
+
+                v_oNotVisited.Clear();
+
+                //List<Vertex> v_oNotVisited = new List<Vertex>();
+
+                for (int i = 0; i < v_o.EdgesCount; i++) {
+                    exist = false;
+
+                    Vertex v_i = v_o.getDestinationAt(i);
+                    for (int j = 0; j < visited.Count; j++) {
+                        if (visited[j] == v_i) {
+                            exist = true;
+                            break;
+                        }
+                    }
+                    if (!exist)
+                        v_oNotVisited.Add(v_i);
+                }
             }
             return null;
         }
