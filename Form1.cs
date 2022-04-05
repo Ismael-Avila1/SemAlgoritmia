@@ -378,19 +378,6 @@ namespace SemAlgoritmia
                     return vSol;
             }
             return null;
-
-            //for(int i=0; i<v_o.EdgesCount; i++) {
-            //    if (!explore)
-            //        return;
-
-            //    if(!agent.isVertexVisited(v_o.getDestinationAt(i))) {
-            //        MyTreeNode child = new MyTreeNode(v_o.getDestinationAt(i), root);
-            //        root.addChild(child);
-            //        DFS(v_o.getDestinationAt(i), visited, child, explore, v_obj);
-            //    }
-            //}
-
-            //return;
         }
 
 
