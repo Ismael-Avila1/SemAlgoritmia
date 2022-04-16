@@ -33,7 +33,6 @@ namespace SemAlgoritmia
 
 
             buttonCreateGraph.Visible = true;
-
             treeView.Visible = false;
             groupBox.Visible = false;
             buttonRunSimulation.Visible = false;
@@ -45,7 +44,7 @@ namespace SemAlgoritmia
 
             findCircles();
 
-            for (int i = 0; i < circleList.Count; i++)
+            for (int i=0; i<circleList.Count; i++)
                 drawCircle(circleList[i].Center.X, circleList[i].Center.Y, circleList[i].R, bmpImage, Color.Black, 3);
 
 
@@ -155,8 +154,8 @@ namespace SemAlgoritmia
         {
             Color c_i;
 
-            for (int y_i = 0; y_i < bmpImage.Height; y_i++)
-                for (int x_i = 0; x_i < bmpImage.Width; x_i++) {
+            for (int y_i=0; y_i<bmpImage.Height; y_i++)
+                for (int x_i=0; x_i<bmpImage.Width; x_i++) {
                     c_i = bmpImage.GetPixel(x_i, y_i);
 
                     if (isBlack(c_i))
@@ -201,10 +200,10 @@ namespace SemAlgoritmia
 
             Vertex v_i;
 
-            for (int i = 0; i < graph.VertexCount; i++) {
+            for (int i=0; i<graph.VertexCount; i++) {
                 v_i = graph.getVertexAt(i);
 
-                for (int j = 0; j < v_i.EdgesCount; j++)
+                for (int j=0; j<v_i.EdgesCount; j++)
                     g.DrawLine(p, v_i.Position, v_i.getDestinationAt(j).Position);
             }
 
@@ -215,11 +214,11 @@ namespace SemAlgoritmia
             drawLines();
 
             // dibujar circulos sobre las lineas
-            for (int i = 0; i < circleList.Count; i++)
+            for (int i=0; i<circleList.Count; i++)
                 drawCircle(circleList[i].Center.X, circleList[i].Center.Y, circleList[i].R, bmpGraph, Color.Black, 10);
 
             // dibujar IDs sobre los circulos
-            for (int i = 0; i < circleList.Count; i++)
+            for (int i=0; i<circleList.Count; i++)
                 drawID(circleList[i].Center.X, circleList[i].Center.Y, circleList[i].ID);
 
             pictureBox.Refresh();
@@ -232,11 +231,11 @@ namespace SemAlgoritmia
 
             Vertex v_i;
 
-            for (int i = 0; i < graph.VertexCount; i++) {
+            for (int i=0; i<graph.VertexCount; i++) {
                 v_i = graph.getVertexAt(i);
                 TreeNode node = new TreeNode(v_i.ToString());
 
-                for (int j = 0; j < v_i.EdgesCount; j++) {
+                for (int j=0; j<v_i.EdgesCount; j++) {
                     TreeNode nodeSon = new TreeNode(v_i.getDestinationAt(j).ToString());
                     node.Nodes.Add(nodeSon);
                 }
@@ -251,7 +250,7 @@ namespace SemAlgoritmia
 
             Vertex v_i;
 
-            for (int i = 0; i < graph.VertexCount; i++)
+            for (int i=0; i<graph.VertexCount; i++)
             {
                 v_i = graph.getVertexAt(i);
 
@@ -273,7 +272,7 @@ namespace SemAlgoritmia
         {
             Graphics g = Graphics.FromImage(bmpAnimation);
 
-            for (int i = 0; i < path.Count; i += 8) { // El incremento es la velocidad a la que se mueve el agente
+            for (int i=0; i<path.Count; i+=8) { // El incremento es la velocidad a la que se mueve el agente
                 g.Clear(Color.Transparent);
                 drawCircle(path[i].X, path[i].Y, 6, bmpAnimation, Color.CornflowerBlue, 4);
                 pictureBox.Refresh();
@@ -289,22 +288,20 @@ namespace SemAlgoritmia
             DFS();
             List<Vertex> depthVertices = depthTree.inorder();
 
-            for (int i = 0; i < depthVertices.Count; i++)
-            {
-                if (i == depthVertices.Count - 1)
-                {
+            for (int i=0; i<depthVertices.Count; i++) {
+                if (i == depthVertices.Count - 1) {
                     MessageBox.Show("El objetivo no se encuentra en Sub-Grafo", "Notificación", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
-                if (depthVertices[i].Id == objetive.VertexIndex + 1)
-                {
+                if (depthVertices[i].Id == objetive.VertexIndex + 1) {
                     MessageBox.Show("Objetivo alcanzado", "Notificación", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     break;
                 }
 
                 moveAgent(depthVertices[i].getEdgePath(depthVertices[i].findDestinationVertexIndex(graph.getVertexAt(depthVertices[i].Id - 1), graph.getVertexAt(depthVertices[i + 1].Id - 1))));
             }
+
 
             BFS();
             // se recorre el arbol en anchura para obtener la mejor secuencia para llegar al objetivo
@@ -313,13 +310,12 @@ namespace SemAlgoritmia
             Graphics g = Graphics.FromImage(bmpAnimation);
             Pen p = new Pen(Color.LimeGreen, 5);
 
-            for (int j = 0; j < bestSecuence.Count - 1; j++)
-            {
+            for (int j=0; j<bestSecuence.Count-1; j++)
                 g.DrawLine(p, bestSecuence[j].Position, bestSecuence[j + 1].Position);
-            }
+            
+
             pictureBox.Refresh();
             MessageBox.Show("La línea verde representa la menor cantidad de pasos para llegar al objetivo", "Notificación", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
         }
 
         void DFS()
@@ -350,16 +346,15 @@ namespace SemAlgoritmia
                 exist = false;
 
                 Vertex v_i = v_o.getDestinationAt(i);
-                for(int j=0; j<visited.Count; j++) {
+                for(int j=0; j<visited.Count; j++)
                     if(visited[j] == v_i) {
                         exist = true;
                         break;
                     }
-                }
                 if(!exist)
                     v_oNotVisited.Add(v_i);
-
             }
+
 
             Random rand = new Random(DateTime.Now.Millisecond);
             
@@ -376,18 +371,16 @@ namespace SemAlgoritmia
 
                 v_oNotVisited.Clear();
 
-                //List<Vertex> v_oNotVisited = new List<Vertex>();
 
                 for (int i = 0; i < v_o.EdgesCount; i++) {
                     exist = false;
 
                     Vertex v_i = v_o.getDestinationAt(i);
-                    for (int j = 0; j < visited.Count; j++) {
+                    for (int j = 0; j < visited.Count; j++)
                         if (visited[j] == v_i) {
                             exist = true;
                             break;
                         }
-                    }
                     if (!exist)
                         v_oNotVisited.Add(v_i);
                 }
@@ -411,15 +404,12 @@ namespace SemAlgoritmia
 
             breadthTree = new MyTree(v_inicial);
 
-            MyTreeNode destinationLeaf = new MyTreeNode();
 
-            bool explore = true;
-
-            BFS(q, agent.VisitedVertices, v_o, breadthTree.Root, v_obj, breadthTree, destinationLeaf);
+            BFS(q, agent.VisitedVertices, v_o, breadthTree.Root, v_obj, breadthTree);
 
         }
 
-        void BFS(Queue<Vertex> q, List<Vertex> visited, Vertex v_o, MyTreeNode root, Vertex v_obj, MyTree tree, MyTreeNode destinationLeaf)
+        void BFS(Queue<Vertex> q, List<Vertex> visited, Vertex v_o, MyTreeNode root, Vertex v_obj, MyTree tree)
         {
             if(q.Count == 0)
                 return;
@@ -427,7 +417,7 @@ namespace SemAlgoritmia
             v_o = q.Dequeue();
             root = tree.find(tree.Root, v_o);
 
-            for(int i=0; i<v_o.EdgesCount; i++) {
+            for(int i=0; i<v_o.EdgesCount; i++)
                 if(!agent.isVertexVisited(v_o.getDestinationAt(i))) {
                     q.Enqueue(v_o.getDestinationAt(i));
 
@@ -437,14 +427,12 @@ namespace SemAlgoritmia
                     visited.Add(v_o.getDestinationAt(i));
 
                     if(v_o.getDestinationAt(i) == v_obj) {
-                        destinationLeaf = tree.find(tree.Root, v_o.getDestinationAt(i));
                         q.Clear();
                         return;
                     }
                 }
-            }
 
-            BFS(q, visited, v_o, root, v_obj, tree, destinationLeaf);
+            BFS(q, visited, v_o, root, v_obj, tree);
         }
 
         List<Vertex> breadthVertices()

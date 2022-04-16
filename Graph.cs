@@ -10,6 +10,7 @@ namespace SemAlgoritmia
     {
         List<Vertex> vertexList;
 
+
         public Graph()
         {
             vertexList = new List<Vertex>();
@@ -19,17 +20,16 @@ namespace SemAlgoritmia
         {
             vertexList = new List<Vertex>();
 
-            foreach (Circle c_i in circlesList)
+            foreach(Circle c_i in circlesList)
                 vertexList.Add(new Vertex(c_i.ID, c_i.Center));
-
 
             Vertex vertexOrigin;
             Vertex vertexDestination;
 
-            for (int i = 0; i < vertexList.Count; i++) {
+            for(int i=0; i<vertexList.Count; i++) {
                 vertexOrigin = vertexList[i];
                 
-                for (int j = i + 1; j < vertexList.Count; j++) {
+                for(int j=i+1; j<vertexList.Count; j++) {
                     vertexDestination = vertexList[j];
 
                     List<Point> pathOriginToDestination;
@@ -49,9 +49,11 @@ namespace SemAlgoritmia
 
         }
 
-        public int VertexCount { get { return vertexList.Count; } }
 
-        public Vertex getVertexAt(int pos) { return vertexList[pos]; }
+        public Vertex getVertexAt(int pos)
+        {
+            return vertexList[pos];
+        }
 
         public List<Point> makePath(Vertex vertexOrigin, Vertex vertexDestination)
         {
@@ -73,44 +75,39 @@ namespace SemAlgoritmia
             x_f = vertexDestination.Position.X;
             y_f = vertexDestination.Position.Y;
 
-            if (x_f - x_0 == 0) { // Si es una linea recta vertical
-
-                if (y_0 > y_f) // Si el primer click se dio abajo y el segundo arriba
+            if(x_f - x_0 == 0) { // Si es una linea recta vertical
+                if(y_0 > y_f) // Si el primer click se dio abajo y el segundo arriba
                     inc = -1;
 
-                for (y_k = (int)y_0; y_k != y_f; y_k += inc)
+                for(y_k=(int)y_0; y_k!=y_f; y_k+=inc)
                     path.Add(new Point((int)Math.Round(x_0), y_k));
             }
             else {
-
                 m = (y_f - y_0) / (x_f - x_0);  // m representa la inclnacion de la pendiente en la ecuacion lineal
                 b = y_f - m * x_f;              // b es el termino constante de la ecuacion linea. represenra el desplazamiento
 
-                if (m > -1 && m < 1) {
-
+                if(m > -1 && m < 1) {
                     if (x_0 > x_f) // Si el primer click se dio a la derecha y el segundo a la izquerda
                         inc = -1;
 
-                    for (x_k = (int)x_0; x_k != x_f; x_k += inc) {
+                    for (x_k=(int)x_0; x_k!=x_f; x_k+=inc) {
                         y_k = (int)(m * x_k + b);
                         path.Add(new Point(x_k, y_k));
                     }
                 }
                 else {
-                    if (y_0 > y_f) // Si se dio el primer click abajo y el segundo arriba
+                    if(y_0 > y_f) // Si se dio el primer click abajo y el segundo arriba
                         inc = -1;
 
-                    for (y_k = (int)y_0; y_k != y_f; y_k += inc) {
+                    for(y_k=(int)y_0; y_k!=y_f; y_k+=inc) {
                         x_k = (int)((1 / m) * (y_k - b));
                         path.Add(new Point(x_k, y_k));
-
                     }
                 }
             }
 
             return path;
         }
-
 
         bool isWhite(Color color)
         {
@@ -134,30 +131,31 @@ namespace SemAlgoritmia
         {
             int i = 0;
 
-            while (isBlack(bmp.GetPixel(path[i].X, path[i].Y))) {  // mientras estemos dentro del circulo negro de origen
+            while (isBlack(bmp.GetPixel(path[i].X, path[i].Y)))     // mientras estemos dentro del circulo negro de origen
                 i++;
-            }
             // ya salimos del circulo de origen
 
 
             while(isWhite(bmp.GetPixel(path[i].X, path[i].Y))) { // mientras no encontremos algo diferente de blanco
                 if (!isWhite(bmp.GetPixel(path[i].X, path[i].Y)) && !isBlack(bmp.GetPixel(path[i].X, path[i].Y))) // color diferente de negro y blanco
                     return false; // Se encontro con un obstaculo
-                
                 i++;
             } // llegamos a un circulo
+
 
             while(i < path.Count-1) {
                 if (isWhite(bmp.GetPixel(path[i].X, path[i].Y))) // llegamos a un pixel blanco, o sea, no era el ciruclo destino y i está afuera del circulo
                     return false;
-                
                 i++;
             }
 
             return true;
-
         }
 
+        public int VertexCount
+        {
+            get { return vertexList.Count; }
+        }
 
     }
 }

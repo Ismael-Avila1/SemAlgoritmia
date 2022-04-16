@@ -35,7 +35,6 @@ namespace SemAlgoritmia
         {
             string s;
             s = "Del vertice -> " + (vertexIndex + 1) + " por su arista: " + (edgeIndex + 1);
-
             return s;
         }
 

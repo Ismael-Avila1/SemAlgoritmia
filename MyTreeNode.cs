@@ -12,6 +12,7 @@ namespace SemAlgoritmia
         Vertex data;
         MyTreeNode father;
 
+
         public MyTreeNode()
         {
             children = new List<MyTreeNode>();

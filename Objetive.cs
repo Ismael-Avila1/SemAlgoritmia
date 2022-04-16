@@ -12,9 +12,15 @@ namespace SemAlgoritmia
 
         public Objetive() { }
 
-        public Objetive(int vertexIndex) { this.vertexIndex = vertexIndex; }
+        public Objetive(int vertexIndex)
+        {
+            this.vertexIndex = vertexIndex;
+        }
 
-        public int VertexIndex { get { return vertexIndex; } }
+        public int VertexIndex
+        {
+            get { return vertexIndex; }
+        }
 
     }
 }

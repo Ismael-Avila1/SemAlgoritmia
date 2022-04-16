@@ -10,6 +10,7 @@ namespace SemAlgoritmia
     {
         MyTreeNode root;
 
+
         public MyTree()
         {
             root = new MyTreeNode();
@@ -20,10 +21,6 @@ namespace SemAlgoritmia
             root = new MyTreeNode(data, null);
         }
 
-        //public void insert(Vertex data, MyTreeNode node)
-        //{
-        //    node.addChild(data);
-        //}
 
         public List<Vertex> inorder()
         {
@@ -36,7 +33,7 @@ namespace SemAlgoritmia
         {
             vertices.Add(root.Data);
 
-            for(int i=0; i< root.ChildrenCount; i++) {
+            for(int i=0; i<root.ChildrenCount; i++) {
                 inorder(root.getChildAt(i), vertices);
                 vertices.Add(root.Data);
             }
@@ -49,20 +46,22 @@ namespace SemAlgoritmia
 
             MyTreeNode foundNode;
 
-            for(int i=0;i<node.ChildrenCount;i++) {
+            for(int i=0; i<node.ChildrenCount; i++) {
                 MyTreeNode aux = node.getChildAt(i);
-                //if (aux.Data.Id == v.Id)
-                //    return aux;
 
                 foundNode = find(aux, v);
-                if(foundNode != null) {
+                if(foundNode != null)
                     return foundNode;
-                }
             }
+
             return null;
         }
 
 
-        public MyTreeNode Root { get { return root; } }
+        public MyTreeNode Root
+        {
+            get { return root; }
+        }
+
     }
 }

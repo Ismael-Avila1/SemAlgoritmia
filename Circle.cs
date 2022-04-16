@@ -12,6 +12,7 @@ namespace SemAlgoritmia
         Point center;
         int r;
 
+
         public Circle() { }
 
         public Circle(int id, Point center, int r)
@@ -21,9 +22,21 @@ namespace SemAlgoritmia
             this.r = r;
         }
 
-        public int ID { get { return id; } }
-        public Point Center { get { return center; } }
-        public int R { get { return r; } }
+
+        public int ID
+        {
+            get { return id; }
+        }
+
+        public Point Center
+        {
+            get { return center; }
+        }
+
+        public int R
+        {
+            get { return r; }
+        }
 
     }
 }

@@ -10,8 +10,8 @@ namespace SemAlgoritmia
     {
         Vertex destination;
         float weight;
-
         List<Point> path;
+
 
         public Edge() { }
 
@@ -22,7 +22,11 @@ namespace SemAlgoritmia
             this.path = path;
         }
 
-        public Vertex Destination { get { return destination; } }
+
+        public Vertex Destination
+        {
+            get { return destination; }
+        }
 
         public List<Point> Path
         {

@@ -25,10 +25,6 @@ namespace SemAlgoritmia
             this.position = position;
         }
 
-        public int Id { get { return id; } }
-        public Point Position { get { return position; } }
-        public int EdgesCount { get { return edgesList.Count; } }
-
 
         public void addEdge(Vertex vertexDestination, float weight, List<Point> path)
         {
@@ -36,9 +32,15 @@ namespace SemAlgoritmia
             edgesList.Add(newEdge);
         }
 
-        public Vertex getDestinationAt(int pos) { return edgesList[pos].Destination; }
+        public Vertex getDestinationAt(int pos)
+        {
+            return edgesList[pos].Destination;
+        }
 
-        public List<Point> getEdgePath(int pos) { return edgesList[pos].Path; } 
+        public List<Point> getEdgePath(int pos)
+        {
+            return edgesList[pos].Path;
+        }
 
         public override string ToString()
         {
@@ -47,14 +49,27 @@ namespace SemAlgoritmia
 
         public int findDestinationVertexIndex(Vertex vertexOrigin, Vertex vertexDestination)
         {
-            for (int i=0; i < vertexOrigin.EdgesCount; i++) {
+            for (int i=0; i < vertexOrigin.EdgesCount; i++)
                 if(vertexOrigin.getDestinationAt(i) == vertexDestination)
                     return i;
-            }
             return -1;
         }
 
 
+        public int Id
+        {
+            get { return id; }
+        }
+
+        public Point Position
+        {
+            get { return position; }
+        }
+
+        public int EdgesCount
+        {
+            get { return edgesList.Count; }
+        }
 
     }
 }

@@ -10,9 +10,7 @@ namespace SemAlgoritmia
     {
         int vertexIndex;
         List<Point> path;
-
         List<VisitedPaths> visitedPaths;
-
         List<Vertex> visitedVertices;
 
 
@@ -32,6 +30,34 @@ namespace SemAlgoritmia
             this.vertexIndex = vertexIndex;
         }
 
+
+        public void addVisitedPath(VisitedPaths path)
+        {
+            visitedPaths.Add(path);
+        }
+
+        public bool pathAlreadyVisited(VisitedPaths path)
+        {
+            for(int i=0; i<visitedPaths.Count; i++)
+                if(visitedPaths[i].VertexIndex == path.VertexIndex && visitedPaths[i].EdgeIndex == path.EdgeIndex)
+                    return true;
+            return false;
+        }
+
+        public void addVisitedVertex(Vertex vertex) 
+        {
+            visitedVertices.Add(vertex);
+        }
+
+        public bool isVertexVisited(Vertex vertex)
+        {
+            for(int i=0; i<visitedVertices.Count; i++)
+                if(visitedVertices[i].Id == vertex.Id)
+                    return true;
+            return false;
+        }
+       
+        
         public int VertexIndex
         {
             get { return vertexIndex; }
@@ -44,35 +70,15 @@ namespace SemAlgoritmia
             set { path = value; }
         }
 
-        public List<VisitedPaths> VisitedPaths { get { return visitedPaths; } }
-
-
-        public void addVisitedPath(VisitedPaths path) { visitedPaths.Add(path); }
-
-        public bool pathAlreadyVisited(VisitedPaths path)
+        public List<VisitedPaths> VisitedPaths
         {
-            for (int i = 0; i < visitedPaths.Count; i++)
-                if (visitedPaths[i].VertexIndex == path.VertexIndex && visitedPaths[i].EdgeIndex == path.EdgeIndex)
-                    return true;
-
-            return false;
+            get { return visitedPaths; }
         }
 
-        public void addVisitedVertex(Vertex vertex)
+        public List<Vertex> VisitedVertices
         {
-            visitedVertices.Add(vertex);
+            get { return visitedVertices; }
         }
-
-        public bool isVertexVisited(Vertex vertex)
-        {
-            for(int i=0; i < visitedVertices.Count; i++)
-                if (visitedVertices[i].Id == vertex.Id)
-                    return true;
-            
-            return false;
-        }
-
-        public List<Vertex> VisitedVertices { get { return visitedVertices; } }
 
     }
 }
