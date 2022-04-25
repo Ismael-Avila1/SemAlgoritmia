@@ -16,12 +16,17 @@ namespace SemAlgoritmia
 
         public Edge() { }
 
-        public Edge(Vertex origin, Vertex destination, float weight, List<Point> path)
+        public Edge(Vertex origin, Vertex destination, List<Point> path)
         {
             this.origin = origin;
             this.destination = destination;
-            this.weight = weight;
+            this.weight = calculateWeight(origin, destination);
             this.path = path;
+        }
+
+        float calculateWeight(Vertex origin, Vertex destination)
+        {
+            return (float)Math.Sqrt(Math.Pow((destination.Position.X - origin.Position.X), 2) + Math.Pow((destination.Position.Y - origin.Position.Y), 2));
         }
 
         public Vertex Origin
