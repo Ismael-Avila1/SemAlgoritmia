@@ -31,6 +31,29 @@ namespace SemAlgoritmia
         }
 
 
+        public int VertexIndex
+        {
+            get { return vertexIndex; }
+            set { vertexIndex = value; }
+        }
+
+        public List<Point> Path
+        {
+            get { return path; }
+            set { path = value; }
+        }
+
+        public List<VisitedPaths> VisitedPaths
+        {
+            get { return visitedPaths; }
+        }
+
+        public List<Vertex> VisitedVertices
+        {
+            get { return visitedVertices; }
+        }
+
+        
         public void addVisitedPath(VisitedPaths path)
         {
             visitedPaths.Add(path);
@@ -57,28 +80,5 @@ namespace SemAlgoritmia
             return false;
         }
        
-        
-        public int VertexIndex
-        {
-            get { return vertexIndex; }
-            set { vertexIndex = value; }
-        }
-
-        public List<Point> Path
-        {
-            get { return path; }
-            set { path = value; }
-        }
-
-        public List<VisitedPaths> VisitedPaths
-        {
-            get { return visitedPaths; }
-        }
-
-        public List<Vertex> VisitedVertices
-        {
-            get { return visitedVertices; }
-        }
-
     }
 }

@@ -26,15 +26,6 @@ namespace SemAlgoritmia
             this.father = father;
         }
 
-        public void addChild(MyTreeNode child)
-        {
-            children.Add(child);
-        }
-
-        public MyTreeNode getChildAt(int pos)
-        {
-            return children[pos];
-        }
 
         public Vertex Data
         {
@@ -50,6 +41,17 @@ namespace SemAlgoritmia
         public MyTreeNode Father
         {
             get { return father; }
+        }
+        
+        
+        public void addChild(MyTreeNode child)
+        {
+            children.Add(child);
+        }
+
+        public MyTreeNode getChildAt(int pos)
+        {
+            return children[pos];
         }
 
     }

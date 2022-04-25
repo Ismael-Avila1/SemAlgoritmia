@@ -24,10 +24,6 @@ namespace SemAlgoritmia
             this.path = path;
         }
 
-        float calculateWeight(Vertex origin, Vertex destination)
-        {
-            return (float)Math.Sqrt(Math.Pow((destination.Position.X - origin.Position.X), 2) + Math.Pow((destination.Position.Y - origin.Position.Y), 2));
-        }
 
         public Vertex Origin
         {
@@ -48,6 +44,12 @@ namespace SemAlgoritmia
         {
             get { return path; }
             set { path = value; }
+        }
+        
+        
+        float calculateWeight(Vertex origin, Vertex destination)
+        {
+            return (float)Math.Sqrt(Math.Pow((destination.Position.X - origin.Position.X), 2) + Math.Pow((destination.Position.Y - origin.Position.Y), 2));
         }
 
     }

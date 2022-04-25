@@ -26,6 +26,22 @@ namespace SemAlgoritmia
         }
 
 
+        public int Id
+        {
+            get { return id; }
+        }
+
+        public Point Position
+        {
+            get { return position; }
+        }
+
+        public int EdgesCount
+        {
+            get { return edgesList.Count; }
+        }
+        
+        
         public void addEdge(Edge newEdge)
         {
             edgesList.Add(newEdge);
@@ -52,22 +68,6 @@ namespace SemAlgoritmia
                 if(vertexOrigin.getDestinationAt(i) == vertexDestination)
                     return i;
             return -1;
-        }
-
-
-        public int Id
-        {
-            get { return id; }
-        }
-
-        public Point Position
-        {
-            get { return position; }
-        }
-
-        public int EdgesCount
-        {
-            get { return edgesList.Count; }
         }
 
     }

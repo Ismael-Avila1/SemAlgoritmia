@@ -22,6 +22,12 @@ namespace SemAlgoritmia
         }
 
 
+        public MyTreeNode Root
+        {
+            get { return root; }
+        }
+        
+        
         public List<Vertex> inorder()
         {
             List<Vertex> vertices = new List<Vertex>();
@@ -55,12 +61,6 @@ namespace SemAlgoritmia
             }
 
             return null;
-        }
-
-
-        public MyTreeNode Root
-        {
-            get { return root; }
         }
 
     }

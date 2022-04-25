@@ -17,6 +17,7 @@ namespace SemAlgoritmia
             this.vertexIndex = vertexIndex;
         }
 
+
         public int VertexIndex
         {
             get { return vertexIndex; }

@@ -49,6 +49,12 @@ namespace SemAlgoritmia
         }
 
 
+        public int VertexCount
+        {
+            get { return vertexList.Count; }
+        }
+
+
         public Vertex getVertexAt(int pos)
         {
             return vertexList[pos];
@@ -270,10 +276,6 @@ namespace SemAlgoritmia
             BFS(q, agent, v_o, root, v_obj, tree);
         }
 
-        public int VertexCount
-        {
-            get { return vertexList.Count; }
-        }
 
     }
 }
