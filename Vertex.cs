@@ -26,6 +26,11 @@ namespace SemAlgoritmia
         }
 
 
+        public List<Edge> EdgesList
+        {
+            get { return edgesList; }
+        }
+
         public int Id
         {
             get { return id; }

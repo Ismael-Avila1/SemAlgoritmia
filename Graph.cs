@@ -28,7 +28,7 @@ namespace SemAlgoritmia
 
             for(int i=0; i<vertexList.Count; i++) {
                 vertexOrigin = vertexList[i];
-                
+
                 for(int j=i+1; j<vertexList.Count; j++) {
                     vertexDestination = vertexList[j];
 
@@ -95,7 +95,7 @@ namespace SemAlgoritmia
                     if (x_0 > x_f) // Si el primer click se dio a la derecha y el segundo a la izquerda
                         inc = -1;
 
-                    for (x_k=(int)x_0; x_k!=x_f; x_k+=inc) {
+                    for(x_k=(int)x_0; x_k!=x_f; x_k+=inc) {
                         y_k = (int)(m * x_k + b);
                         path.Add(new Point(x_k, y_k));
                     }
@@ -136,7 +136,7 @@ namespace SemAlgoritmia
         {
             int i = 0;
 
-            while (isBlack(bmp.GetPixel(path[i].X, path[i].Y)))     // mientras estemos dentro del circulo negro de origen
+            while(isBlack(bmp.GetPixel(path[i].X, path[i].Y)))     // mientras estemos dentro del circulo negro de origen
                 i++;
             // ya salimos del circulo de origen
 
@@ -148,7 +148,7 @@ namespace SemAlgoritmia
             } // llegamos a un circulo
 
 
-            while(i < path.Count-1) {
+            while(i < path.Count -1) {
                 if (isWhite(bmp.GetPixel(path[i].X, path[i].Y))) // llegamos a un pixel blanco, o sea, no era el ciruclo destino y i está afuera del circulo
                     return false;
                 i++;
@@ -178,21 +178,21 @@ namespace SemAlgoritmia
         {
             visited.Add(v_o);
 
-            if (v_o.Id == v_obj.Id) // si ya se llego al objetivo
+            if(v_o.Id == v_obj.Id) // si ya se llego al objetivo
                 return v_o;
 
             List<Vertex> unvisitedFromV_O = new List<Vertex>();
 
-            for (int i=0; i<v_o.EdgesCount; i++) {
+            for(int i=0; i<v_o.EdgesCount; i++) {
                 exist = false;
 
                 Vertex v_i = v_o.getDestinationAt(i);
-                for (int j=0; j<visited.Count; j++)
+                for(int j=0; j<visited.Count; j++)
                     if (visited[j] == v_i) {
                         exist = true;
                         break;
                     }
-                if (!exist)
+                if(!exist)
                     unvisitedFromV_O.Add(v_i);
             }
 
@@ -207,21 +207,21 @@ namespace SemAlgoritmia
 
                 Vertex vSol = DFS(unvisitedFromV_O[r], visited, child, exist, v_obj);
 
-                if (vSol != null)
+                if(vSol != null)
                     return vSol;
 
                 unvisitedFromV_O.Clear();
 
-                for (int i=0; i<v_o.EdgesCount; i++) {
+                for(int i=0; i<v_o.EdgesCount; i++) {
                     exist = false;
 
                     Vertex v_i = v_o.getDestinationAt(i);
-                    for (int j=0; j<visited.Count; j++)
-                        if (visited[j] == v_i) {
+                    for(int j=0; j<visited.Count; j++)
+                        if(visited[j] == v_i) {
                             exist = true;
                             break;
                         }
-                    if (!exist)
+                    if(!exist)
                         unvisitedFromV_O.Add(v_i);
                 }
             }
@@ -258,8 +258,8 @@ namespace SemAlgoritmia
             v_o = q.Dequeue();
             root = tree.find(tree.Root, v_o);
 
-            for (int i=0; i<v_o.EdgesCount; i++)
-                if (!agent.isVertexVisited(v_o.getDestinationAt(i))) {
+            for(int i=0; i<v_o.EdgesCount; i++)
+                if(!agent.isVertexVisited(v_o.getDestinationAt(i))) {
                     q.Enqueue(v_o.getDestinationAt(i));
 
                     MyTreeNode child = new MyTreeNode(v_o.getDestinationAt(i), root);
@@ -267,7 +267,7 @@ namespace SemAlgoritmia
 
                     agent.VisitedVertices.Add(v_o.getDestinationAt(i));
 
-                    if (v_o.getDestinationAt(i) == v_obj) {
+                    if(v_o.getDestinationAt(i) == v_obj) {
                         q.Clear();
                         return;
                     }
@@ -277,6 +277,68 @@ namespace SemAlgoritmia
         }
 
 
+
+        // ------------------ Kruskal ------------------
+        List<Edge> graphEdges()
+        {
+            List<Edge> edges = new List<Edge>();
+            Vertex v_i;
+
+            for(int i=0; i<VertexCount; i++) {
+                v_i = vertexList[i];
+
+                for(int j=0; j<v_i.EdgesCount; j++)
+                    edges.Add(v_i.EdgesList[j]);
+            }
+
+            return edges;
+        }
+
+        int[,] ccInitialize()
+        {
+            int[,] CC = new int[VertexCount, VertexCount];
+
+            for(int i=0; i<VertexCount; i++)
+                for(int j=0; j<VertexCount; j++)
+                    CC[i, j] = -1;
+
+            for(int i=0; i<VertexCount; i++)
+                CC[i, i] = vertexList[i].Id;
+
+            return CC;
+        }
+
+        Edge selection(List<Edge> candidates)
+        {
+            Edge candidate;
+            int minorIndex = 0;
+
+            for(int i=0; i<candidates.Count; i++)
+                if(candidates[i].Weight < candidates[minorIndex].Weight)
+                    minorIndex = i;
+
+            candidate = candidates[minorIndex];
+            candidates.RemoveAt(minorIndex);
+            return candidate;
+        }
+
+        int findInCC(Vertex v_d, int[,] CC)
+        {
+            for(int i=0; i<CC.Length; i++)
+                for(int j=0; j<CC.Length; j++)
+                    if (CC[i, j] == v_d.Id)
+                        return i;
+            return -1;
+        }
+
+        void combineCC(int[,] CC, int index1, int index2)
+        {
+            for(int i=0; i<CC.Length; i++)
+                if (CC[index2, i] != -1) {
+                    CC[index1, i] = CC[index2, i];
+                    CC[index2, i] = -1;
+                }
+        }
 
     }
 }
