@@ -12,8 +12,6 @@ namespace SemAlgoritmia
         List<Circle> circleList;
         Graph graph;
 
-        MyTree depthTree;
-        MyTree breadthTree;
 
         public Form1()
         {
@@ -284,8 +282,10 @@ namespace SemAlgoritmia
             drawGraph();
             drawCircle(graph.getVertexAt(objetive.VertexIndex).Position.X, graph.getVertexAt(objetive.VertexIndex).Position.Y, 3, bmpGraph, Color.LightGoldenrodYellow, 4);
 
+            MyTree depthTree = graph.DFS(agent, objetive);
+            MyTree breadthTree = graph.BFS(agent, objetive);
 
-            DFS();
+
             List<Vertex> depthVertices = depthTree.inorder();
 
             for (int i=0; i<depthVertices.Count; i++) {
@@ -302,10 +302,8 @@ namespace SemAlgoritmia
                 moveAgent(depthVertices[i].getEdgePath(depthVertices[i].findDestinationVertexIndex(graph.getVertexAt(depthVertices[i].Id - 1), graph.getVertexAt(depthVertices[i + 1].Id - 1))));
             }
 
-
-            BFS();
             // se recorre el arbol en anchura para obtener la mejor secuencia para llegar al objetivo
-            List<Vertex> bestSecuence = breadthVertices();
+            List<Vertex> bestSecuence = breadthVertices(breadthTree);
 
             Graphics g = Graphics.FromImage(bmpAnimation);
             Pen p = new Pen(Color.LimeGreen, 5);
@@ -318,124 +316,8 @@ namespace SemAlgoritmia
             MessageBox.Show("La línea verde representa la menor cantidad de pasos para llegar al objetivo", "Notificación", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        void DFS()
-        {
-            agent.VisitedVertices.Clear();
 
-            Vertex v_inicial = graph.getVertexAt(agent.VertexIndex);
-            Vertex v_o = v_inicial;
-            Vertex v_obj = graph.getVertexAt(objetive.VertexIndex);
-
-            depthTree = new MyTree(v_inicial);
-
-            bool explore = true;
-
-            DFS(v_o, agent.VisitedVertices, depthTree.Root, explore, v_obj);
-        }
-
-        Vertex DFS(Vertex v_o, List<Vertex> visited, MyTreeNode root, bool exist, Vertex v_obj)
-        {
-            visited.Add(v_o);
-
-            if (v_o.Id == v_obj.Id) // si ya se llego al objetivo
-                return v_o;
-
-            List<Vertex> v_oNotVisited = new List<Vertex>();
-
-            for(int i=0; i<v_o.EdgesCount; i++) {
-                exist = false;
-
-                Vertex v_i = v_o.getDestinationAt(i);
-                for(int j=0; j<visited.Count; j++)
-                    if(visited[j] == v_i) {
-                        exist = true;
-                        break;
-                    }
-                if(!exist)
-                    v_oNotVisited.Add(v_i);
-            }
-
-
-            Random rand = new Random(DateTime.Now.Millisecond);
-            
-            while(v_oNotVisited.Count > 0) {
-                int r = rand.Next(0, v_oNotVisited.Count);
-
-                MyTreeNode child = new MyTreeNode(v_oNotVisited[r], root);
-                root.addChild(child);
-
-                Vertex vSol = DFS(v_oNotVisited[r], visited, child, exist, v_obj);
-
-                if (vSol != null)
-                    return vSol;
-
-                v_oNotVisited.Clear();
-
-
-                for (int i = 0; i < v_o.EdgesCount; i++) {
-                    exist = false;
-
-                    Vertex v_i = v_o.getDestinationAt(i);
-                    for (int j = 0; j < visited.Count; j++)
-                        if (visited[j] == v_i) {
-                            exist = true;
-                            break;
-                        }
-                    if (!exist)
-                        v_oNotVisited.Add(v_i);
-                }
-            }
-            return null;
-        }
-
-
-        void BFS()
-        {
-            agent.VisitedVertices.Clear();
-            
-            Vertex v_inicial = graph.getVertexAt(agent.VertexIndex);
-            Vertex v_o = v_inicial;
-            Vertex v_obj = graph.getVertexAt(objetive.VertexIndex);
-
-            Queue<Vertex> q = new Queue<Vertex>();
-
-            agent.VisitedVertices.Add(v_o);
-            q.Enqueue(v_o);
-
-            breadthTree = new MyTree(v_inicial);
-
-
-            BFS(q, agent.VisitedVertices, v_o, breadthTree.Root, v_obj, breadthTree);
-
-        }
-
-        void BFS(Queue<Vertex> q, List<Vertex> visited, Vertex v_o, MyTreeNode root, Vertex v_obj, MyTree tree)
-        {
-            if(q.Count == 0)
-                return;
-
-            v_o = q.Dequeue();
-            root = tree.find(tree.Root, v_o);
-
-            for(int i=0; i<v_o.EdgesCount; i++)
-                if(!agent.isVertexVisited(v_o.getDestinationAt(i))) {
-                    q.Enqueue(v_o.getDestinationAt(i));
-
-                    MyTreeNode child = new MyTreeNode(v_o.getDestinationAt(i), root);
-                    root.addChild(child);
-
-                    visited.Add(v_o.getDestinationAt(i));
-
-                    if(v_o.getDestinationAt(i) == v_obj) {
-                        q.Clear();
-                        return;
-                    }
-                }
-
-            BFS(q, visited, v_o, root, v_obj, tree);
-        }
-
-        List<Vertex> breadthVertices()
+        List<Vertex> breadthVertices(MyTree breadthTree)
         {
             List<Vertex> vertices = new List<Vertex>();
 

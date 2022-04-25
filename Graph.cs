@@ -152,6 +152,125 @@ namespace SemAlgoritmia
             return true;
         }
 
+
+        public MyTree DFS(Agent agent, Objetive objetive)
+        {
+            agent.VisitedVertices.Clear();
+
+            Vertex v_o = getVertexAt(agent.VertexIndex);
+            Vertex v_obj = getVertexAt(objetive.VertexIndex);
+
+            MyTree tree = new MyTree(v_o);
+
+            bool exist = true;
+
+            DFS(v_o, agent.VisitedVertices, tree.Root, exist, v_obj);
+
+            return tree;
+        }
+
+        Vertex DFS(Vertex v_o, List<Vertex> visited, MyTreeNode root, bool exist, Vertex v_obj)
+        {
+            visited.Add(v_o);
+
+            if (v_o.Id == v_obj.Id) // si ya se llego al objetivo
+                return v_o;
+
+            List<Vertex> unvisitedFromV_O = new List<Vertex>();
+
+            for (int i=0; i<v_o.EdgesCount; i++) {
+                exist = false;
+
+                Vertex v_i = v_o.getDestinationAt(i);
+                for (int j=0; j<visited.Count; j++)
+                    if (visited[j] == v_i) {
+                        exist = true;
+                        break;
+                    }
+                if (!exist)
+                    unvisitedFromV_O.Add(v_i);
+            }
+
+
+            Random rand = new Random(DateTime.Now.Millisecond);
+
+            while (unvisitedFromV_O.Count > 0) {
+                int r = rand.Next(0, unvisitedFromV_O.Count);
+
+                MyTreeNode child = new MyTreeNode(unvisitedFromV_O[r], root);
+                root.addChild(child);
+
+                Vertex vSol = DFS(unvisitedFromV_O[r], visited, child, exist, v_obj);
+
+                if (vSol != null)
+                    return vSol;
+
+                unvisitedFromV_O.Clear();
+
+                for (int i=0; i<v_o.EdgesCount; i++) {
+                    exist = false;
+
+                    Vertex v_i = v_o.getDestinationAt(i);
+                    for (int j=0; j<visited.Count; j++)
+                        if (visited[j] == v_i) {
+                            exist = true;
+                            break;
+                        }
+                    if (!exist)
+                        unvisitedFromV_O.Add(v_i);
+                }
+            }
+
+            return null;
+        }
+
+
+        public MyTree BFS(Agent agent, Objetive objetive)
+        {
+            agent.VisitedVertices.Clear();
+
+            Vertex v_o = getVertexAt(agent.VertexIndex);
+            Vertex v_obj = getVertexAt(objetive.VertexIndex);
+
+            Queue<Vertex> q = new Queue<Vertex>();
+
+            agent.VisitedVertices.Add(v_o);
+            q.Enqueue(v_o);
+
+
+            MyTree tree = new MyTree(v_o);
+
+            BFS(q, agent, v_o, tree.Root, v_obj, tree);
+
+            return tree;
+        }
+
+        void BFS(Queue<Vertex> q, Agent agent, Vertex v_o, MyTreeNode root, Vertex v_obj, MyTree tree)
+        {
+            if (q.Count == 0)
+                return;
+
+            v_o = q.Dequeue();
+            root = tree.find(tree.Root, v_o);
+
+            for (int i=0; i<v_o.EdgesCount; i++)
+                if (!agent.isVertexVisited(v_o.getDestinationAt(i))) {
+                    q.Enqueue(v_o.getDestinationAt(i));
+
+                    MyTreeNode child = new MyTreeNode(v_o.getDestinationAt(i), root);
+                    root.addChild(child);
+
+                    agent.VisitedVertices.Add(v_o.getDestinationAt(i));
+
+                    if (v_o.getDestinationAt(i) == v_obj) {
+                        q.Clear();
+                        return;
+                    }
+                }
+
+            BFS(q, agent, v_o, root, v_obj, tree);
+        }
+
         public int VertexCount
         {
             get { return vertexList.Count; }
