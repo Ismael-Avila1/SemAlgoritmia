@@ -26,9 +26,8 @@ namespace SemAlgoritmia
         }
 
 
-        public void addEdge(Vertex vertexDestination, float weight, List<Point> path)
+        public void addEdge(Edge newEdge)
         {
-            Edge newEdge = new Edge(vertexDestination, weight, path);
             edgesList.Add(newEdge);
         }
 

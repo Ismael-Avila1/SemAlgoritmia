@@ -38,11 +38,10 @@ namespace SemAlgoritmia
 
                     if(existEdge(pathOriginToDestination, bmp)) {
 
-                        List<Point> pathDestinationToOrigin;
+                        List<Point> pathDestinationToOrigin = makePath(vertexDestination, vertexOrigin);
 
-                        pathDestinationToOrigin = makePath(vertexDestination, vertexOrigin);
-                        vertexOrigin.addEdge(vertexDestination, 0, pathOriginToDestination);
-                        vertexDestination.addEdge(vertexOrigin, 0, pathDestinationToOrigin);
+                        vertexOrigin.addEdge(new Edge(vertexOrigin, vertexDestination, 0, pathOriginToDestination));
+                        vertexDestination.addEdge(new Edge(vertexDestination, vertexOrigin, 0, pathDestinationToOrigin));
                     }
                 }
             }
