@@ -279,6 +279,29 @@ namespace SemAlgoritmia
 
 
         // ------------------ Kruskal ------------------
+        MyTree kruskal(Vertex v_o)
+        {
+            List<Edge> candidates = graphEdges();
+            Queue<Edge> promising = new Queue<Edge>();
+            Edge e_i;
+            int index1, index2;
+
+            int[,] CC = ccInitialize();
+
+            while(promising.Count != -1) {
+                e_i = selection(candidates);
+                index1 = findInCC(e_i.Origin, CC);
+                index2 = findInCC(e_i.Destination, CC);
+
+                if(index1 != index2) {
+                    promising.Enqueue(e_i);
+                    combineCC(CC, index1, index2);
+                }
+            }
+
+
+        }
+        
         List<Edge> graphEdges()
         {
             List<Edge> edges = new List<Edge>();
