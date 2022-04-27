@@ -25,6 +25,7 @@ namespace SemAlgoritmia
         public MyTreeNode Root
         {
             get { return root; }
+            set { root = value; }
         }
         
         
@@ -45,7 +46,13 @@ namespace SemAlgoritmia
             }
         }
 
-        public MyTreeNode find(MyTreeNode node, Vertex v)
+        
+        public MyTreeNode find(Vertex v)
+        {
+            return find(root, v);
+        }
+        
+        MyTreeNode find(MyTreeNode node, Vertex v)
         {
             if(node.Data.Id == v.Id)
                 return node;

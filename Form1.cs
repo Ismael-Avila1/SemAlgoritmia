@@ -321,7 +321,7 @@ namespace SemAlgoritmia
         {
             List<Vertex> vertices = new List<Vertex>();
 
-            MyTreeNode aux = breadthTree.find(breadthTree.Root, graph.getVertexAt(objetive.VertexIndex));
+            MyTreeNode aux = breadthTree.find(graph.getVertexAt(objetive.VertexIndex));
 
             while(aux != null) {
                 vertices.Add(aux.Data);
