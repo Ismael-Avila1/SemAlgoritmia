@@ -256,7 +256,7 @@ namespace SemAlgoritmia
                 return;
 
             v_o = q.Dequeue();
-            root = tree.find(tree.Root, v_o);
+            root = tree.find(v_o);
 
             for(int i=0; i<v_o.EdgesCount; i++)
                 if(!agent.isVertexVisited(v_o.getDestinationAt(i))) {
@@ -279,27 +279,27 @@ namespace SemAlgoritmia
 
 
         // ------------------ Kruskal ------------------
-        MyTree kruskal(Vertex v_o)
+        public List<MyTree> kruskal()
         {
             List<Edge> candidates = graphEdges();
             Queue<Edge> promising = new Queue<Edge>();
             Edge e_i;
             int index1, index2;
 
-            int[,] CC = ccInitialize();
+            List<MyTree> CC = ccInitialize();
 
             while(promising.Count != -1) {
                 e_i = selection(candidates);
-                index1 = findInCC(e_i.Origin, CC);
-                index2 = findInCC(e_i.Destination, CC);
+                index1 = findInCC(CC, e_i.Origin);
+                index2 = findInCC(CC, e_i.Destination);
 
                 if(index1 != index2) {
                     promising.Enqueue(e_i);
-                    combineCC(CC, index1, index2);
+                    combineCC(CC, e_i.Origin, e_i.Destination);
                 }
             }
 
-
+            return CC;
         }
         
         List<Edge> graphEdges()
@@ -317,16 +317,12 @@ namespace SemAlgoritmia
             return edges;
         }
 
-        int[,] ccInitialize()
+        List<MyTree> ccInitialize()
         {
-            int[,] CC = new int[VertexCount, VertexCount];
+            List<MyTree> CC = new List<MyTree>();
 
-            for(int i=0; i<VertexCount; i++)
-                for(int j=0; j<VertexCount; j++)
-                    CC[i, j] = -1;
-
-            for(int i=0; i<VertexCount; i++)
-                CC[i, i] = vertexList[i].Id;
+            for (int i = 0; i < VertexCount; i++)
+                CC.Add(new MyTree(vertexList[i]));
 
             return CC;
         }
@@ -345,23 +341,28 @@ namespace SemAlgoritmia
             return candidate;
         }
 
-        int findInCC(Vertex v_d, int[,] CC)
+        int findInCC(List<MyTree> CC, Vertex v_d)
         {
-            for(int i=0; i<CC.Length; i++)
-                for(int j=0; j<CC.Length; j++)
-                    if (CC[i, j] == v_d.Id)
-                        return i;
+            for(int i=0; i<CC.Count; i++)
+                if (CC[i].find(v_d) != null)
+                    return i;
+
             return -1;
         }
 
-        void combineCC(int[,] CC, int index1, int index2)
+        void combineCC(List<MyTree> CC, Vertex v1, Vertex v2)
         {
-            for(int i=0; i<CC.Length; i++)
-                if (CC[index2, i] != -1) {
-                    CC[index1, i] = CC[index2, i];
-                    CC[index2, i] = -1;
-                }
+            MyTreeNode aux1;
+            MyTreeNode aux2;
+
+            aux1 = CC[findInCC(CC, v1)].find(v1);
+            aux2 = CC[findInCC(CC, v2)].find(v2);
+
+            aux1.addChild(aux2);
+            aux2.Father = aux1;
         }
+
+
 
     }
 }

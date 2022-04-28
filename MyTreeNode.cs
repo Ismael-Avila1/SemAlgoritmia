@@ -41,6 +41,7 @@ namespace SemAlgoritmia
         public MyTreeNode Father
         {
             get { return father; }
+            set { father = value; }
         }
         
         
