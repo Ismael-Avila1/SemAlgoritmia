@@ -282,21 +282,18 @@ namespace SemAlgoritmia
         public List<MyTree> kruskal()
         {
             List<Edge> candidates = graphEdges();
-            Queue<Edge> promising = new Queue<Edge>();
             Edge e_i;
             int index1, index2;
 
             List<MyTree> CC = ccInitialize();
 
-            while(promising.Count != -1) {
+            while(candidates.Count != 0) {
                 e_i = selection(candidates);
                 index1 = findInCC(CC, e_i.Origin);
                 index2 = findInCC(CC, e_i.Destination);
 
-                if(index1 != index2) {
-                    promising.Enqueue(e_i);
+                if(index1 != index2)
                     combineCC(CC, e_i.Origin, e_i.Destination);
-                }
             }
 
             return CC;
