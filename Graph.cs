@@ -279,7 +279,59 @@ namespace SemAlgoritmia
 
 
         // ------------------ Kruskal ------------------
-        public Queue<Edge> kruskal()
+        public List<MyTree> kruskal()
+        {
+            List<MyTree> trees = new List<MyTree>();
+            Queue<Edge> edges = kruskalEdges();
+
+            kruskal(trees, edges);
+
+            return trees;
+        }
+        
+        void kruskal(List<MyTree> trees, Queue<Edge> edges)
+        {
+            if(edges.Count == 0)
+                return;
+            
+            Queue<Edge> auxEdges = new Queue<Edge>();
+
+            Edge e_i;
+            MyTree t;
+
+            MyTreeNode aux;
+            Vertex firstOrigin, firstDestination;
+
+            e_i = edges.Dequeue();
+            t = new MyTree(e_i.Origin);
+            t.Root.addChild(new MyTreeNode(e_i.Destination, t.Root));
+            trees.Add(t);
+
+            while(edges.Count != 0) {
+                e_i = edges.Dequeue();
+
+                for(int i=0; i<trees.Count; i++) {
+                    aux = trees[i].find(e_i.Origin);
+                    
+                    if(aux == null) {
+                        aux = trees[i].find(e_i.Destination);
+                        if(aux == null)
+                            edges.Enqueue(e_i);
+                        else
+                            aux.addChild(new MyTreeNode(e_i.Origin, aux));
+                    }
+                    else
+                        aux.addChild(new MyTreeNode(e_i.Destination, aux));
+                 }
+            }
+
+            
+
+            //kruskal(trees, auxEdges);
+        }
+
+
+        Queue<Edge> kruskalEdges()
         {
             List<Edge> candidates = graphEdges();
             Queue<Edge> promising = new Queue<Edge>();
