@@ -300,8 +300,9 @@ namespace SemAlgoritmia
             MyTree t;
 
             MyTreeNode aux;
-            Vertex firstOrigin, firstDestination;
+            Vertex frontOrigin, frontDestination;
 
+            /*
             e_i = edges.Dequeue();
             t = new MyTree(e_i.Origin);
             t.Root.addChild(new MyTreeNode(e_i.Destination, t.Root));
@@ -324,7 +325,25 @@ namespace SemAlgoritmia
                         aux.addChild(new MyTreeNode(e_i.Destination, aux));
                  }
             }
+            */
 
+            while(edges.Count != 0) {
+
+                if(trees.Count == 0) {
+                    e_i = edges.Dequeue();
+                    MyTree t_i = new MyTree(e_i.Origin);
+                    t_i.Root.addChild(new MyTreeNode(e_i.Destination, t_i.Root));
+                    trees.Add(t_i);
+                }
+
+                e_i = edges.Dequeue();
+
+
+
+
+
+
+            }
             
 
             //kruskal(trees, auxEdges);
