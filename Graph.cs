@@ -282,77 +282,18 @@ namespace SemAlgoritmia
         public List<MyTree> kruskal()
         {
             List<MyTree> trees = new List<MyTree>();
-            Queue<Edge> edges = kruskalEdges();
+            List<Queue<Edge>> edges = kruskalEdges();
 
-            kruskal(trees, edges);
+
 
             return trees;
         }
         
-        void kruskal(List<MyTree> trees, Queue<Edge> edges)
-        {
-            if(edges.Count == 0)
-                return;
-            
-            Queue<Edge> auxEdges = new Queue<Edge>();
 
-            Edge e_i;
-            MyTree t;
-
-            MyTreeNode aux;
-            Vertex frontOrigin, frontDestination;
-
-            /*
-            e_i = edges.Dequeue();
-            t = new MyTree(e_i.Origin);
-            t.Root.addChild(new MyTreeNode(e_i.Destination, t.Root));
-            trees.Add(t);
-
-            while(edges.Count != 0) {
-                e_i = edges.Dequeue();
-
-                for(int i=0; i<trees.Count; i++) {
-                    aux = trees[i].find(e_i.Origin);
-                    
-                    if(aux == null) {
-                        aux = trees[i].find(e_i.Destination);
-                        if(aux == null)
-                            edges.Enqueue(e_i);
-                        else
-                            aux.addChild(new MyTreeNode(e_i.Origin, aux));
-                    }
-                    else
-                        aux.addChild(new MyTreeNode(e_i.Destination, aux));
-                 }
-            }
-            */
-
-            while(edges.Count != 0) {
-
-                if(trees.Count == 0) {
-                    e_i = edges.Dequeue();
-                    MyTree t_i = new MyTree(e_i.Origin);
-                    t_i.Root.addChild(new MyTreeNode(e_i.Destination, t_i.Root));
-                    trees.Add(t_i);
-                }
-
-                e_i = edges.Dequeue();
-
-
-
-
-
-
-            }
-            
-
-            //kruskal(trees, auxEdges);
-        }
-
-
-        int[,] kruskalEdges()
+        List<Queue<Edge>> kruskalEdges()
         {
             List<Edge> candidates = graphEdges();
+            Queue<Edge> promising = new Queue<Edge>();
             Edge e_i;
             int index1, index2;
 
@@ -365,10 +306,54 @@ namespace SemAlgoritmia
 
                 if(index1 != index2) {
                     combineCC(CC, index1, index2);
+                    promising.Enqueue(e_i);
                 }
             }
 
-            return CC;
+
+            Queue<int> CCindex = new Queue<int>();
+
+            for(int i=0; i<VertexCount; i++)
+                for(int j=0; j<VertexCount; j++)
+                    if(CC[i, j] != -1) {
+                        CCindex.Enqueue(i);
+                        break;
+                    }
+
+
+            List<Queue<Edge>> edges = new List<Queue<Edge>>();
+            Queue<Edge> q;
+            int index;
+
+            while(promising.Count != 0) {
+                index = CCindex.Dequeue();
+                int edgeIndexCount = -1;
+                
+                for(int i=0; i<VertexCount; i++) {
+                    if(CC[index, i] != -1)
+                        edgeIndexCount++;
+                }
+
+                q = new Queue<Edge>();
+
+                while(edgeIndexCount != 0) {
+                    e_i = promising.Dequeue();
+
+                    for(int i=0; i<VertexCount; i++) {
+                        if(CC[index, i] == e_i.Origin.Id || CC[index, i] == e_i.Destination.Id) {
+                            q.Enqueue(e_i);
+                            edgeIndexCount--;
+                            break;
+                        }
+                        if(i == VertexCount-1)
+                            promising.Enqueue(e_i);
+                    }
+                }
+
+                edges.Add(q);
+            }
+
+            return edges;
         }
         
         List<Edge> graphEdges()
