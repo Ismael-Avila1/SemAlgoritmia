@@ -350,10 +350,9 @@ namespace SemAlgoritmia
         }
 
 
-        Queue<Edge> kruskalEdges()
+        int[,] kruskalEdges()
         {
             List<Edge> candidates = graphEdges();
-            Queue<Edge> promising = new Queue<Edge>();
             Edge e_i;
             int index1, index2;
 
@@ -365,12 +364,11 @@ namespace SemAlgoritmia
                 index2 = findInCC(CC, e_i.Destination);
 
                 if(index1 != index2) {
-                    promising.Enqueue(e_i);
                     combineCC(CC, index1, index2);
                 }
             }
 
-            return promising;
+            return CC;
         }
         
         List<Edge> graphEdges()
