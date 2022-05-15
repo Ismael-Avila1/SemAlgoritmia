@@ -283,7 +283,34 @@ namespace SemAlgoritmia
         {
             List<MyTree> trees = new List<MyTree>();
             List<Queue<Edge>> edges = kruskalEdges();
+            MyTree tree;
+            Edge e_i;
 
+            MyTreeNode aux;
+
+            for (int i=0; i<edges.Count; i++) {
+                e_i = edges[i].Dequeue();
+
+                tree = new MyTree(e_i.Origin);
+                tree.Root.addChild(new MyTreeNode(e_i.Destination, tree.Root));
+
+                while(edges[i].Count != 0) {
+                    e_i = edges[i].Dequeue();
+                    
+                    aux = tree.find(e_i.Origin);
+                    if(aux != null)
+                        aux.addChild(new MyTreeNode(e_i.Destination, aux));
+
+                    else {
+                        aux = tree.find(e_i.Destination);
+                        if(aux != null)
+                            aux.addChild(new MyTreeNode(e_i.Origin, aux));
+                        else
+                            edges[i].Enqueue(e_i);
+                    }
+                }
+                trees.Add(tree);
+            }
 
 
             return trees;
