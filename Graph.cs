@@ -455,6 +455,18 @@ namespace SemAlgoritmia
 
         // ------------------ Dijkstra ------------------
 
+        public List<DijkstraElement> dijkstra(int originIndex)
+        {
+            List<DijkstraElement> VD = initializeDijkstraVector(originIndex);
+            int minorIndex;
+
+            while(!solution(VD)) {
+                minorIndex = select(VD);
+                VD = updateDijkstraElements(VD, minorIndex);
+            }
+
+            return VD;
+        }
 
         List<DijkstraElement> initializeDijkstraVector(int originIndex)
         {
@@ -471,7 +483,7 @@ namespace SemAlgoritmia
         bool solution(List<DijkstraElement> VD)
         {
             for(int i=0; i< VD.Count; i++)
-                if(!VD[i].Definitive == false)
+                if(!VD[i].Definitive)
                     return false;
             return true;
         }

@@ -285,6 +285,7 @@ namespace SemAlgoritmia
             MyTree depthTree = graph.DFS(agent, objetive);
             MyTree breadthTree = graph.BFS(agent, objetive);
 
+            graph.dijkstra(agent.VertexIndex);
 
             List<Vertex> depthVertices = depthTree.inorder();
 
