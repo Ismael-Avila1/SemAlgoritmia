@@ -448,5 +448,68 @@ namespace SemAlgoritmia
 
 
 
+
+
+
+
+
+        // ------------------ Dijkstra ------------------
+
+
+        List<DijkstraElement> initializeDijkstraVector(int originIndex)
+        {
+            List<DijkstraElement> VD = new List<DijkstraElement>();
+
+            for(int i=0; i<VertexCount; i++)
+                VD.Add(new DijkstraElement(false, float.MaxValue, null));
+
+            VD[originIndex].AccumulatedWeight = 0;
+
+            return VD;
+        }
+
+        bool solution(List<DijkstraElement> VD)
+        {
+            for(int i=0; i< VD.Count; i++)
+                if(!VD[i].Definitive == false)
+                    return false;
+            return true;
+        }
+
+        int select(List<DijkstraElement> VD)
+        {
+            int minorIndex = -1;
+            float minor = float.MaxValue;
+
+            for(int i=0; i< VD.Count; i++)
+                if(!VD[i].Definitive)
+                    if(VD[i].AccumulatedWeight < minor) {
+                        minor = VD[i].AccumulatedWeight;
+                        minorIndex = i;
+                    }
+
+            VD[minorIndex].Definitive = true;
+            return minorIndex;
+        }
+
+        List<DijkstraElement> updateDijkstraElements(List<DijkstraElement> VD, int minorIndex)
+        {
+            float weight_i, actualWeight = VD[minorIndex].AccumulatedWeight;
+            Vertex v_d, v = vertexList[minorIndex];
+
+            for(int i=0; i<v.EdgesCount; i++) {
+                weight_i = actualWeight + v.EdgesList[i].Weight;
+                v_d = v.EdgesList[i].Destination;
+
+                if(VD[v_d.Id - 1].AccumulatedWeight > weight_i) {
+                    VD[v_d.Id - 1].AccumulatedWeight = weight_i;
+                    VD[v_d.Id - 1].ComimgFrom = v;
+                }
+            }
+
+            return VD;
+        }
+
+
     }
 }
