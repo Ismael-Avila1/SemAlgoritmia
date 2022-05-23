@@ -11,18 +11,19 @@ namespace SemAlgoritmia
         bool definitive;
         float accumulatedWeight;
         Vertex comimgFrom;
-
+        Vertex vertex;
 
         public DijkstraElement()
         {
 
         }
 
-        public DijkstraElement(bool definitive, float accumulatedWeight, Vertex comimgFrom) 
+        public DijkstraElement(bool definitive, float accumulatedWeight, Vertex comimgFrom, Vertex vertex) 
         {
             this.definitive = definitive;
             this.accumulatedWeight = accumulatedWeight;
             this.comimgFrom = comimgFrom;
+            this.vertex = vertex;
         }
 
 

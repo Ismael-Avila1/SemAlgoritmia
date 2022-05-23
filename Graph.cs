@@ -473,7 +473,7 @@ namespace SemAlgoritmia
             List<DijkstraElement> VD = new List<DijkstraElement>();
 
             for(int i=0; i<VertexCount; i++)
-                VD.Add(new DijkstraElement(false, float.MaxValue, null));
+                VD.Add(new DijkstraElement(false, float.MaxValue, null, vertexList[i]));
 
             VD[originIndex].AccumulatedWeight = 0;
 
