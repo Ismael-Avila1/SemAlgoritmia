@@ -162,8 +162,8 @@ namespace SemAlgoritmia
         {
             agent.VisitedVertices.Clear();
 
-            Vertex v_o = getVertexAt(agent.VertexIndex);
-            Vertex v_obj = getVertexAt(objetive.VertexIndex);
+            Vertex v_o = agent.AgentVertex;
+            Vertex v_obj = agent.AgentVertex;
 
             MyTree tree = new MyTree(v_o);
 
@@ -234,8 +234,8 @@ namespace SemAlgoritmia
         {
             agent.VisitedVertices.Clear();
 
-            Vertex v_o = getVertexAt(agent.VertexIndex);
-            Vertex v_obj = getVertexAt(objetive.VertexIndex);
+            Vertex v_o = agent.AgentVertex;
+            Vertex v_obj = agent.AgentVertex;
 
             Queue<Vertex> q = new Queue<Vertex>();
 

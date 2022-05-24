@@ -8,7 +8,7 @@ namespace SemAlgoritmia
 {
     internal class Agent
     {
-        int vertexIndex;
+        Vertex agentVertex;
         List<Point> path;
         List<VisitedPaths> visitedPaths;
         List<Vertex> visitedVertices;
@@ -21,20 +21,20 @@ namespace SemAlgoritmia
             visitedVertices = new List<Vertex>();
         }
 
-        public Agent(int vertexIndex)
+        public Agent(Vertex agentVertex)
         {
             path = new List<Point>();
             visitedPaths = new List<VisitedPaths>();
             visitedVertices = new List<Vertex>();
 
-            this.vertexIndex = vertexIndex;
+            this.agentVertex = agentVertex;
         }
 
 
-        public int VertexIndex
+        public Vertex AgentVertex
         {
-            get { return vertexIndex; }
-            set { vertexIndex = value; }
+            get { return agentVertex; }
+            set { agentVertex = value; }
         }
 
         public List<Point> Path

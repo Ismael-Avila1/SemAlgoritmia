@@ -8,19 +8,20 @@ namespace SemAlgoritmia
 {
     internal class Objetive
     {
-        int vertexIndex;
+        Vertex objetiveVertex;
 
         public Objetive() { }
 
-        public Objetive(int vertexIndex)
+        public Objetive(Vertex objetiveVertex)
         {
-            this.vertexIndex = vertexIndex;
+            this.objetiveVertex = objetiveVertex;
         }
 
 
-        public int VertexIndex
+        public Vertex ObjetiveVertex
         {
-            get { return vertexIndex; }
+            get { return objetiveVertex; }
+            set { objetiveVertex = value; }
         }
 
     }
