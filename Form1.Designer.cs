@@ -33,15 +33,21 @@
             this.buttonCreateGraph = new System.Windows.Forms.Button();
             this.treeView = new System.Windows.Forms.TreeView();
             this.groupBox = new System.Windows.Forms.GroupBox();
-            this.buttonSetAgentAndObjetive = new System.Windows.Forms.Button();
+            this.buttonAddAgent = new System.Windows.Forms.Button();
+            this.buttonAddAgents = new System.Windows.Forms.Button();
             this.labelObjetive = new System.Windows.Forms.Label();
             this.labelAgent = new System.Windows.Forms.Label();
             this.comboBoxObjetiveSelection = new System.Windows.Forms.ComboBox();
             this.comboBoxAgentSelection = new System.Windows.Forms.ComboBox();
             this.buttonRunSimulation = new System.Windows.Forms.Button();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.groupBoxShortestPath = new System.Windows.Forms.GroupBox();
+            this.buttonShortestPath = new System.Windows.Forms.Button();
+            this.comboBoxShortestPath = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             this.groupBox.SuspendLayout();
+            this.groupBoxShortestPath.SuspendLayout();
             this.SuspendLayout();
             // 
             // pictureBox
@@ -93,7 +99,8 @@
             // 
             // groupBox
             // 
-            this.groupBox.Controls.Add(this.buttonSetAgentAndObjetive);
+            this.groupBox.Controls.Add(this.buttonAddAgent);
+            this.groupBox.Controls.Add(this.buttonAddAgents);
             this.groupBox.Controls.Add(this.labelObjetive);
             this.groupBox.Controls.Add(this.labelAgent);
             this.groupBox.Controls.Add(this.comboBoxObjetiveSelection);
@@ -102,30 +109,44 @@
             this.groupBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(251)))), ((int)(((byte)(252)))));
             this.groupBox.Location = new System.Drawing.Point(12, 529);
             this.groupBox.Name = "groupBox";
-            this.groupBox.Size = new System.Drawing.Size(617, 212);
+            this.groupBox.Size = new System.Drawing.Size(617, 207);
             this.groupBox.TabIndex = 4;
             this.groupBox.TabStop = false;
             this.groupBox.Text = "Agentes y Objetivos";
             this.groupBox.Visible = false;
             // 
-            // buttonSetAgentAndObjetive
+            // buttonAddAgent
             // 
-            this.buttonSetAgentAndObjetive.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(90)))), ((int)(((byte)(128)))));
-            this.buttonSetAgentAndObjetive.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.buttonSetAgentAndObjetive.Font = new System.Drawing.Font("Open Sans", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.buttonSetAgentAndObjetive.Location = new System.Drawing.Point(399, 67);
-            this.buttonSetAgentAndObjetive.Name = "buttonSetAgentAndObjetive";
-            this.buttonSetAgentAndObjetive.Size = new System.Drawing.Size(190, 80);
-            this.buttonSetAgentAndObjetive.TabIndex = 4;
-            this.buttonSetAgentAndObjetive.Text = "Establecer Agente y Objetivo";
-            this.buttonSetAgentAndObjetive.UseVisualStyleBackColor = false;
-            this.buttonSetAgentAndObjetive.Click += new System.EventHandler(this.buttonSetAgentAndObjetive_Click);
+            this.buttonAddAgent.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(90)))), ((int)(((byte)(128)))));
+            this.buttonAddAgent.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.buttonAddAgent.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.buttonAddAgent.Font = new System.Drawing.Font("Open Sans", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.buttonAddAgent.Location = new System.Drawing.Point(410, 131);
+            this.buttonAddAgent.Name = "buttonAddAgent";
+            this.buttonAddAgent.Size = new System.Drawing.Size(190, 50);
+            this.buttonAddAgent.TabIndex = 5;
+            this.buttonAddAgent.Text = "Añadir Objetivo";
+            this.buttonAddAgent.UseVisualStyleBackColor = false;
+            this.buttonAddAgent.Click += new System.EventHandler(this.buttonAddAgent_Click);
+            // 
+            // buttonAddAgents
+            // 
+            this.buttonAddAgents.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(90)))), ((int)(((byte)(128)))));
+            this.buttonAddAgents.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.buttonAddAgents.Font = new System.Drawing.Font("Open Sans", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.buttonAddAgents.Location = new System.Drawing.Point(410, 41);
+            this.buttonAddAgents.Name = "buttonAddAgents";
+            this.buttonAddAgents.Size = new System.Drawing.Size(190, 50);
+            this.buttonAddAgents.TabIndex = 4;
+            this.buttonAddAgents.Text = "Añadir Agentes";
+            this.buttonAddAgents.UseVisualStyleBackColor = false;
+            this.buttonAddAgents.Click += new System.EventHandler(this.buttonAddAgents_Click);
             // 
             // labelObjetive
             // 
             this.labelObjetive.AutoSize = true;
             this.labelObjetive.Font = new System.Drawing.Font("Open Sans", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.labelObjetive.Location = new System.Drawing.Point(6, 124);
+            this.labelObjetive.Location = new System.Drawing.Point(14, 117);
             this.labelObjetive.Name = "labelObjetive";
             this.labelObjetive.Size = new System.Drawing.Size(348, 23);
             this.labelObjetive.TabIndex = 3;
@@ -135,7 +156,7 @@
             // 
             this.labelAgent.AutoSize = true;
             this.labelAgent.Font = new System.Drawing.Font("Open Sans", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.labelAgent.Location = new System.Drawing.Point(6, 38);
+            this.labelAgent.Location = new System.Drawing.Point(14, 37);
             this.labelAgent.Name = "labelAgent";
             this.labelAgent.Size = new System.Drawing.Size(338, 23);
             this.labelAgent.TabIndex = 2;
@@ -145,7 +166,7 @@
             // 
             this.comboBoxObjetiveSelection.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxObjetiveSelection.FormattingEnabled = true;
-            this.comboBoxObjetiveSelection.Location = new System.Drawing.Point(6, 160);
+            this.comboBoxObjetiveSelection.Location = new System.Drawing.Point(14, 153);
             this.comboBoxObjetiveSelection.Name = "comboBoxObjetiveSelection";
             this.comboBoxObjetiveSelection.Size = new System.Drawing.Size(170, 28);
             this.comboBoxObjetiveSelection.TabIndex = 1;
@@ -154,7 +175,7 @@
             // 
             this.comboBoxAgentSelection.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxAgentSelection.FormattingEnabled = true;
-            this.comboBoxAgentSelection.Location = new System.Drawing.Point(6, 64);
+            this.comboBoxAgentSelection.Location = new System.Drawing.Point(14, 63);
             this.comboBoxAgentSelection.Name = "comboBoxAgentSelection";
             this.comboBoxAgentSelection.Size = new System.Drawing.Size(170, 28);
             this.comboBoxAgentSelection.TabIndex = 0;
@@ -178,12 +199,59 @@
             // 
             this.openFileDialog.FileName = "openFileDialog1";
             // 
+            // groupBoxShortestPath
+            // 
+            this.groupBoxShortestPath.Controls.Add(this.buttonShortestPath);
+            this.groupBoxShortestPath.Controls.Add(this.comboBoxShortestPath);
+            this.groupBoxShortestPath.Controls.Add(this.label1);
+            this.groupBoxShortestPath.Font = new System.Drawing.Font("Open Sans", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.groupBoxShortestPath.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(251)))), ((int)(((byte)(252)))));
+            this.groupBoxShortestPath.Location = new System.Drawing.Point(12, 756);
+            this.groupBoxShortestPath.Name = "groupBoxShortestPath";
+            this.groupBoxShortestPath.Size = new System.Drawing.Size(617, 135);
+            this.groupBoxShortestPath.TabIndex = 7;
+            this.groupBoxShortestPath.TabStop = false;
+            this.groupBoxShortestPath.Text = "Camino más corto desde un vértice al objetivo";
+            // 
+            // buttonShortestPath
+            // 
+            this.buttonShortestPath.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(90)))), ((int)(((byte)(128)))));
+            this.buttonShortestPath.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.buttonShortestPath.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.buttonShortestPath.Font = new System.Drawing.Font("Open Sans", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.buttonShortestPath.Location = new System.Drawing.Point(410, 64);
+            this.buttonShortestPath.Name = "buttonShortestPath";
+            this.buttonShortestPath.Size = new System.Drawing.Size(190, 52);
+            this.buttonShortestPath.TabIndex = 2;
+            this.buttonShortestPath.Text = "Mostrar Camino";
+            this.buttonShortestPath.UseVisualStyleBackColor = false;
+            // 
+            // comboBoxShortestPath
+            // 
+            this.comboBoxShortestPath.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxShortestPath.FormattingEnabled = true;
+            this.comboBoxShortestPath.Location = new System.Drawing.Point(14, 78);
+            this.comboBoxShortestPath.Name = "comboBoxShortestPath";
+            this.comboBoxShortestPath.Size = new System.Drawing.Size(170, 28);
+            this.comboBoxShortestPath.TabIndex = 1;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Open Sans", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label1.Location = new System.Drawing.Point(14, 30);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(434, 23);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Selecciona un vértice para mostar el camino más corto";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(50)))), ((int)(((byte)(65)))));
-            this.ClientSize = new System.Drawing.Size(1282, 753);
+            this.ClientSize = new System.Drawing.Size(1282, 912);
+            this.Controls.Add(this.groupBoxShortestPath);
             this.Controls.Add(this.buttonRunSimulation);
             this.Controls.Add(this.groupBox);
             this.Controls.Add(this.treeView);
@@ -196,6 +264,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
             this.groupBox.ResumeLayout(false);
             this.groupBox.PerformLayout();
+            this.groupBoxShortestPath.ResumeLayout(false);
+            this.groupBoxShortestPath.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -207,12 +277,17 @@
         private Button buttonCreateGraph;
         private TreeView treeView;
         private GroupBox groupBox;
-        private Button buttonSetAgentAndObjetive;
+        private Button buttonAddAgents;
         private Label labelObjetive;
         private Label labelAgent;
         private ComboBox comboBoxObjetiveSelection;
         private ComboBox comboBoxAgentSelection;
         private Button buttonRunSimulation;
         private OpenFileDialog openFileDialog;
+        private Button buttonAddAgent;
+        private GroupBox groupBoxShortestPath;
+        private Button buttonShortestPath;
+        private ComboBox comboBoxShortestPath;
+        private Label label1;
     }
 }
