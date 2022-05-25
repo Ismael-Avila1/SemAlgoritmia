@@ -33,7 +33,7 @@
             this.buttonCreateGraph = new System.Windows.Forms.Button();
             this.treeView = new System.Windows.Forms.TreeView();
             this.groupBox = new System.Windows.Forms.GroupBox();
-            this.buttonAddAgent = new System.Windows.Forms.Button();
+            this.buttonAddObjetive = new System.Windows.Forms.Button();
             this.buttonAddAgents = new System.Windows.Forms.Button();
             this.labelObjetive = new System.Windows.Forms.Label();
             this.labelAgent = new System.Windows.Forms.Label();
@@ -62,6 +62,7 @@
             // buttonLoadImage
             // 
             this.buttonLoadImage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(90)))), ((int)(((byte)(128)))));
+            this.buttonLoadImage.Cursor = System.Windows.Forms.Cursors.Hand;
             this.buttonLoadImage.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.buttonLoadImage.Font = new System.Drawing.Font("Open Sans", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.buttonLoadImage.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(251)))), ((int)(((byte)(252)))));
@@ -76,6 +77,7 @@
             // buttonCreateGraph
             // 
             this.buttonCreateGraph.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(90)))), ((int)(((byte)(128)))));
+            this.buttonCreateGraph.Cursor = System.Windows.Forms.Cursors.Hand;
             this.buttonCreateGraph.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.buttonCreateGraph.Font = new System.Drawing.Font("Open Sans", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.buttonCreateGraph.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(251)))), ((int)(((byte)(252)))));
@@ -99,7 +101,7 @@
             // 
             // groupBox
             // 
-            this.groupBox.Controls.Add(this.buttonAddAgent);
+            this.groupBox.Controls.Add(this.buttonAddObjetive);
             this.groupBox.Controls.Add(this.buttonAddAgents);
             this.groupBox.Controls.Add(this.labelObjetive);
             this.groupBox.Controls.Add(this.labelAgent);
@@ -115,23 +117,24 @@
             this.groupBox.Text = "Agentes y Objetivos";
             this.groupBox.Visible = false;
             // 
-            // buttonAddAgent
+            // buttonAddObjetive
             // 
-            this.buttonAddAgent.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(90)))), ((int)(((byte)(128)))));
-            this.buttonAddAgent.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.buttonAddAgent.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.buttonAddAgent.Font = new System.Drawing.Font("Open Sans", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.buttonAddAgent.Location = new System.Drawing.Point(410, 131);
-            this.buttonAddAgent.Name = "buttonAddAgent";
-            this.buttonAddAgent.Size = new System.Drawing.Size(190, 50);
-            this.buttonAddAgent.TabIndex = 5;
-            this.buttonAddAgent.Text = "Añadir Objetivo";
-            this.buttonAddAgent.UseVisualStyleBackColor = false;
-            this.buttonAddAgent.Click += new System.EventHandler(this.buttonAddAgent_Click);
+            this.buttonAddObjetive.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(90)))), ((int)(((byte)(128)))));
+            this.buttonAddObjetive.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.buttonAddObjetive.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.buttonAddObjetive.Font = new System.Drawing.Font("Open Sans", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.buttonAddObjetive.Location = new System.Drawing.Point(410, 131);
+            this.buttonAddObjetive.Name = "buttonAddObjetive";
+            this.buttonAddObjetive.Size = new System.Drawing.Size(190, 50);
+            this.buttonAddObjetive.TabIndex = 5;
+            this.buttonAddObjetive.Text = "Añadir Objetivo";
+            this.buttonAddObjetive.UseVisualStyleBackColor = false;
+            this.buttonAddObjetive.Click += new System.EventHandler(this.buttonAddObjetive_Click);
             // 
             // buttonAddAgents
             // 
             this.buttonAddAgents.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(90)))), ((int)(((byte)(128)))));
+            this.buttonAddAgents.Cursor = System.Windows.Forms.Cursors.Hand;
             this.buttonAddAgents.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.buttonAddAgents.Font = new System.Drawing.Font("Open Sans", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.buttonAddAgents.Location = new System.Drawing.Point(410, 41);
@@ -183,12 +186,13 @@
             // buttonRunSimulation
             // 
             this.buttonRunSimulation.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(238)))), ((int)(((byte)(108)))), ((int)(((byte)(77)))));
+            this.buttonRunSimulation.Cursor = System.Windows.Forms.Cursors.Hand;
             this.buttonRunSimulation.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.buttonRunSimulation.Font = new System.Drawing.Font("Open Sans", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.buttonRunSimulation.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(251)))), ((int)(((byte)(252)))));
-            this.buttonRunSimulation.Location = new System.Drawing.Point(688, 594);
+            this.buttonRunSimulation.Location = new System.Drawing.Point(660, 580);
             this.buttonRunSimulation.Name = "buttonRunSimulation";
-            this.buttonRunSimulation.Size = new System.Drawing.Size(190, 80);
+            this.buttonRunSimulation.Size = new System.Drawing.Size(252, 104);
             this.buttonRunSimulation.TabIndex = 5;
             this.buttonRunSimulation.Text = "Iniciar Simulación";
             this.buttonRunSimulation.UseVisualStyleBackColor = false;
@@ -225,6 +229,7 @@
             this.buttonShortestPath.TabIndex = 2;
             this.buttonShortestPath.Text = "Mostrar Camino";
             this.buttonShortestPath.UseVisualStyleBackColor = false;
+            this.buttonShortestPath.Click += new System.EventHandler(this.buttonShortestPath_Click);
             // 
             // comboBoxShortestPath
             // 
@@ -284,7 +289,7 @@
         private ComboBox comboBoxAgentSelection;
         private Button buttonRunSimulation;
         private OpenFileDialog openFileDialog;
-        private Button buttonAddAgent;
+        private Button buttonAddObjetive;
         private GroupBox groupBoxShortestPath;
         private Button buttonShortestPath;
         private ComboBox comboBoxShortestPath;
