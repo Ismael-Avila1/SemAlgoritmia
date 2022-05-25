@@ -90,7 +90,11 @@ namespace SemAlgoritmia
                 return;
             }
 
-            agents.Add(new Agent((Vertex)comboBoxAgentSelection.SelectedItem));
+            Agent agent = new Agent((Vertex)comboBoxAgentSelection.SelectedItem);
+            agents.Add(agent);
+
+            drawCircle(agent.AgentVertex.Position.X, agent.AgentVertex.Position.Y, 8, bmpGraph, Color.CornflowerBlue, 2);
+            pictureBox.Refresh();
 
             comboBoxAgentSelection.Items.RemoveAt(selectedIndex);
             comboBoxObjetiveSelection.Items.RemoveAt(selectedIndex);
@@ -109,6 +113,9 @@ namespace SemAlgoritmia
             }
 
             objetive.ObjetiveVertex = (Vertex)comboBoxObjetiveSelection.SelectedItem;
+
+            drawCircle(objetive.ObjetiveVertex.Position.X, objetive.ObjetiveVertex.Position.Y, 4, bmpGraph, Color.LightYellow, 2);
+            pictureBox.Refresh();
 
             comboBoxAgentSelection.Items.RemoveAt(selectedIndex);
             comboBoxObjetiveSelection.Items.RemoveAt(selectedIndex);
