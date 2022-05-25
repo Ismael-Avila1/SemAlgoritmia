@@ -216,11 +216,13 @@
             this.groupBoxShortestPath.TabIndex = 7;
             this.groupBoxShortestPath.TabStop = false;
             this.groupBoxShortestPath.Text = "Camino más corto desde un vértice al objetivo";
+            this.groupBoxShortestPath.Visible = false;
             // 
             // buttonShortestPath
             // 
             this.buttonShortestPath.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(61)))), ((int)(((byte)(90)))), ((int)(((byte)(128)))));
             this.buttonShortestPath.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.buttonShortestPath.Enabled = false;
             this.buttonShortestPath.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.buttonShortestPath.Font = new System.Drawing.Font("Open Sans", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.buttonShortestPath.Location = new System.Drawing.Point(410, 64);

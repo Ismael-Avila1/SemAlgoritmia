@@ -6,8 +6,10 @@ namespace SemAlgoritmia
         Bitmap bmpGraph;
         Bitmap bmpAnimation;
 
-        Agent agent;
+        List<Agent> agents;
         Objetive objetive;
+
+        bool isObjetiveCreated;
 
         List<Circle> circleList;
         Graph graph;
@@ -18,6 +20,11 @@ namespace SemAlgoritmia
             InitializeComponent();
 
             circleList = new List<Circle>();
+
+            agents = new List<Agent>();
+
+            objetive = new Objetive();
+            isObjetiveCreated = false;
         }
 
         private void buttonLoadImage_Click(object sender, EventArgs e)
@@ -33,7 +40,9 @@ namespace SemAlgoritmia
             buttonCreateGraph.Visible = true;
             treeView.Visible = false;
             groupBox.Visible = false;
+            groupBoxShortestPath.Visible = false;
             buttonRunSimulation.Visible = false;
+            buttonShortestPath.Enabled = true;
         }
 
         private void buttonCreateGraph_Click(object sender, EventArgs e)
@@ -59,27 +68,65 @@ namespace SemAlgoritmia
 
             treeView.Visible = true;
             groupBox.Visible = true;
+            groupBoxShortestPath.Visible = true;
             buttonRunSimulation.Visible = true;
 
             buttonRunSimulation.Enabled = false;
         }
 
-        private void buttonSetAgentAndObjetive_Click(object sender, EventArgs e)
+        private void buttonAddAgents_Click(object sender, EventArgs e)
         {
-            if (comboBoxAgentSelection.SelectedItem == null || comboBoxObjetiveSelection.SelectedItem == null) {
-                MessageBox.Show("Selecciona un vertice para añadir al Agente y al Objetivo", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                buttonRunSimulation.Enabled = false;
+            if(comboBoxAgentSelection.Items.Count == 1) {
+                MessageBox.Show("Ya no es posible agregar más agentes.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                buttonAddAgents.Enabled = false;
                 return;
             }
 
-            createAgentAndObjetive();
 
-            drawCircle(graph.getVertexAt(agent.VertexIndex).Position.X, graph.getVertexAt(agent.VertexIndex).Position.Y, 8, bmpGraph, Color.CornflowerBlue, 4);
-            drawCircle(graph.getVertexAt(objetive.VertexIndex).Position.X, graph.getVertexAt(objetive.VertexIndex).Position.Y, 3, bmpGraph, Color.LightGoldenrodYellow, 4);
+            int selectedIndex = comboBoxAgentSelection.SelectedIndex;
 
-            pictureBox.Refresh();
+            if(selectedIndex  == -1) {
+                MessageBox.Show("Debes seleccionar un índice válido", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
 
-            buttonRunSimulation.Enabled = true;
+            agents.Add(new Agent((Vertex)comboBoxAgentSelection.SelectedItem));
+
+            comboBoxAgentSelection.Items.RemoveAt(selectedIndex);
+            comboBoxObjetiveSelection.Items.RemoveAt(selectedIndex);
+
+            if(agents.Count > 0 && isObjetiveCreated)
+                buttonRunSimulation.Enabled = true;
+        }
+
+        private void buttonAddObjetive_Click(object sender, EventArgs e)
+        {
+            int selectedIndex = comboBoxObjetiveSelection.SelectedIndex;
+
+            if(selectedIndex == -1) {
+                MessageBox.Show("Debes seleccionar un índice válido", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            objetive.ObjetiveVertex = (Vertex)comboBoxObjetiveSelection.SelectedItem;
+
+            comboBoxAgentSelection.Items.RemoveAt(selectedIndex);
+            comboBoxObjetiveSelection.Items.RemoveAt(selectedIndex);
+            comboBoxShortestPath.Items.Remove(objetive.ObjetiveVertex);
+
+            isObjetiveCreated = true;
+
+            groupBoxShortestPath.Visible = true;
+            buttonShortestPath.Enabled = true;
+            buttonAddObjetive.Enabled = false;
+
+            if(agents.Count > 0 && isObjetiveCreated)
+                buttonRunSimulation.Enabled = true;
+        }
+
+        private void buttonShortestPath_Click(object sender, EventArgs e)
+        {
+
         }
 
         private void buttonRunSimulation_Click(object sender, EventArgs e)
@@ -245,32 +292,25 @@ namespace SemAlgoritmia
         {
             comboBoxAgentSelection.Items.Clear();
             comboBoxObjetiveSelection.Items.Clear();
+            comboBoxShortestPath.Items.Clear();
 
             Vertex v_i;
 
-            for (int i=0; i<graph.VertexCount; i++)
-            {
+            for(int i=0; i<graph.VertexCount; i++) {
                 v_i = graph.getVertexAt(i);
 
-                comboBoxAgentSelection.Items.Add(v_i.ToString());
-                comboBoxObjetiveSelection.Items.Add(v_i.ToString());
+                comboBoxAgentSelection.Items.Add(v_i);
+                comboBoxObjetiveSelection.Items.Add(v_i);
+                comboBoxShortestPath.Items.Add(v_i);
             }
         }
 
-
-        void createAgentAndObjetive()
-        {
-            drawGraph();
-
-            agent = new Agent(comboBoxAgentSelection.SelectedIndex);
-            objetive = new Objetive(comboBoxObjetiveSelection.SelectedIndex);
-        }
 
         void moveAgent(List<Point> path)
         {
             Graphics g = Graphics.FromImage(bmpAnimation);
 
-            for (int i=0; i<path.Count; i+=8) { // El incremento es la velocidad a la que se mueve el agente
+            for(int i=0; i<path.Count; i+=8) { // El incremento es la velocidad a la que se mueve el agente
                 g.Clear(Color.Transparent);
                 drawCircle(path[i].X, path[i].Y, 6, bmpAnimation, Color.CornflowerBlue, 4);
                 pictureBox.Refresh();
@@ -279,42 +319,7 @@ namespace SemAlgoritmia
 
         void simulation()
         {
-            drawGraph();
-            drawCircle(graph.getVertexAt(objetive.VertexIndex).Position.X, graph.getVertexAt(objetive.VertexIndex).Position.Y, 3, bmpGraph, Color.LightGoldenrodYellow, 4);
-
-            MyTree depthTree = graph.DFS(agent, objetive);
-            MyTree breadthTree = graph.BFS(agent, objetive);
-
-            graph.dijkstra(agent.VertexIndex);
-
-            List<Vertex> depthVertices = depthTree.inorder();
-
-            for (int i=0; i<depthVertices.Count; i++) {
-                if (i == depthVertices.Count - 1) {
-                    MessageBox.Show("El objetivo no se encuentra en Sub-Grafo", "Notificación", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-
-                if (depthVertices[i].Id == objetive.VertexIndex + 1) {
-                    MessageBox.Show("Objetivo alcanzado", "Notificación", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    break;
-                }
-
-                moveAgent(depthVertices[i].getEdgePath(depthVertices[i].findDestinationVertexIndex(graph.getVertexAt(depthVertices[i].Id - 1), graph.getVertexAt(depthVertices[i + 1].Id - 1))));
-            }
-
-            // se recorre el arbol en anchura para obtener la mejor secuencia para llegar al objetivo
-            List<Vertex> bestSecuence = breadthVertices(breadthTree);
-
-            Graphics g = Graphics.FromImage(bmpAnimation);
-            Pen p = new Pen(Color.LimeGreen, 5);
-
-            for (int j=0; j<bestSecuence.Count-1; j++)
-                g.DrawLine(p, bestSecuence[j].Position, bestSecuence[j + 1].Position);
             
-
-            pictureBox.Refresh();
-            MessageBox.Show("La línea verde representa la menor cantidad de pasos para llegar al objetivo", "Notificación", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
 
@@ -322,7 +327,7 @@ namespace SemAlgoritmia
         {
             List<Vertex> vertices = new List<Vertex>();
 
-            MyTreeNode aux = breadthTree.find(graph.getVertexAt(objetive.VertexIndex));
+            MyTreeNode aux = breadthTree.find(objetive.ObjetiveVertex);
 
             while(aux != null) {
                 vertices.Add(aux.Data);
@@ -332,7 +337,6 @@ namespace SemAlgoritmia
             return vertices;
         }
 
-
-
+        
     }
 }
