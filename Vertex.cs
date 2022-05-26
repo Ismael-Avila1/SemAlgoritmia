@@ -75,5 +75,15 @@ namespace SemAlgoritmia
             return -1;
         }
 
+        public Edge getEdge(Vertex destination)
+        {
+            for(int i=0; i<edgesList.Count; i++)
+                if(edgesList[i].Destination == destination)
+                    return edgesList[i];
+
+            return null;
+        }
+
+
     }
 }
