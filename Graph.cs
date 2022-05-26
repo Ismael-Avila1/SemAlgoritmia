@@ -60,6 +60,14 @@ namespace SemAlgoritmia
             return vertexList[pos];
         }
 
+        public int getIndex(Vertex v)
+        {
+            for(int i=0; i<vertexList.Count; i++)
+                if(vertexList[i] == v)
+                    return i;
+            return -1;
+        }
+
         public List<Point> makePath(Vertex vertexOrigin, Vertex vertexDestination)
         {
             float x_0, y_0;
