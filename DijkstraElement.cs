@@ -45,6 +45,10 @@ namespace SemAlgoritmia
             set { comimgFrom = value; }
         }
 
-
+        public Vertex Vertex
+        {
+            get { return vertex; }
+            set { vertex = value; }
+        }
     }
 }
