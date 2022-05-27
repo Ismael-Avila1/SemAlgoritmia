@@ -124,6 +124,8 @@ namespace SemAlgoritmia
 
             isObjetiveCreated = true;
 
+            VD = graph.dijkstra(graph.getIndex(objetive.ObjetiveVertex));
+
             groupBoxShortestPath.Visible = true;
             buttonShortestPath.Enabled = true;
             buttonAddObjetive.Enabled = false;
@@ -142,21 +144,30 @@ namespace SemAlgoritmia
             Vertex v_o = (Vertex)comboBoxShortestPath.SelectedItem;
             Vertex v_d = objetive.ObjetiveVertex;
             
-            VD = graph.dijkstra(graph.getIndex(v_d));
+            Queue<Edge> shortestPath = new Queue<Edge>();
 
-            List<Edge> shortestPath = new List<Edge>();
-
-            while(v_o != v_d) {
-
+            while(v_o != v_d)
                 for(int i=0; i<VD.Count; i++) 
                     if(VD[i].Vertex == v_o) {
-                        shortestPath.Add(v_o.getEdge(VD[i].ComimgFrom));
+                        shortestPath.Enqueue(v_o.getEdge(VD[i].ComimgFrom));
                         v_o = VD[i].ComimgFrom;
                         break;
                     }
+
+
+            Graphics g = Graphics.FromImage(bmpGraph);
+            Pen p = new Pen(Color.LimeGreen, 5);
+
+            Edge e_i;
+
+            while(shortestPath.Count > 0) {
+                e_i = shortestPath.Dequeue();
+                g.DrawLine(p, e_i.Origin.Position, e_i.Destination.Position);
             }
 
+            pictureBox.Refresh();
 
+            MessageBox.Show("Se mostró el camino más corto desde el " + comboBoxShortestPath.SelectedItem.ToString() + " al objetivo", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void buttonRunSimulation_Click(object sender, EventArgs e)
