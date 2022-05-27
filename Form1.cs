@@ -14,6 +14,7 @@ namespace SemAlgoritmia
         List<Circle> circleList;
         Graph graph;
 
+        List<DijkstraElement> VD;
 
         public Form1()
         {
@@ -133,6 +134,28 @@ namespace SemAlgoritmia
 
         private void buttonShortestPath_Click(object sender, EventArgs e)
         {
+            if(comboBoxShortestPath.SelectedIndex == -1) {
+                MessageBox.Show("Debes seleccionar un índice válido", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            Vertex v_o = (Vertex)comboBoxShortestPath.SelectedItem;
+            Vertex v_d = objetive.ObjetiveVertex;
+            
+            VD = graph.dijkstra(graph.getIndex(v_d));
+
+            List<Edge> shortestPath = new List<Edge>();
+
+            while(v_o != v_d) {
+
+                for(int i=0; i<VD.Count; i++) 
+                    if(VD[i].Vertex == v_o) {
+                        shortestPath.Add(v_o.getEdge(VD[i].ComimgFrom));
+                        v_o = VD[i].ComimgFrom;
+                        break;
+                    }
+            }
+
 
         }
 
