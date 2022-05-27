@@ -470,6 +470,10 @@ namespace SemAlgoritmia
 
             while(!solution(VD)) {
                 minorIndex = select(VD);
+
+                if (minorIndex == -1)
+                    continue;
+                
                 VD = updateDijkstraElements(VD, minorIndex);
             }
 
@@ -507,6 +511,14 @@ namespace SemAlgoritmia
                         minor = VD[i].AccumulatedWeight;
                         minorIndex = i;
                     }
+
+            if(minorIndex == -1) {
+                for(int i=0; i<VD.Count; i++)
+                    if(VD[i].AccumulatedWeight == float.MaxValue) {
+                        VD.RemoveAt(i);
+                        return -1;
+                    }
+            }
 
             VD[minorIndex].Definitive = true;
             return minorIndex;
