@@ -471,7 +471,7 @@ namespace SemAlgoritmia
             while(!solution(VD)) {
                 minorIndex = select(VD);
 
-                if (minorIndex == -1)
+                if(minorIndex == -1)
                     continue;
                 
                 VD = updateDijkstraElements(VD, minorIndex);

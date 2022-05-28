@@ -53,7 +53,7 @@ namespace SemAlgoritmia
             findCircles();
 
             for (int i=0; i<circleList.Count; i++)
-                drawCircle(circleList[i].Center.X, circleList[i].Center.Y, circleList[i].R, bmpImage, Color.Black, 3);
+                drawCircle(circleList[i].Center.X, circleList[i].Center.Y, circleList[i].R, bmpImage, Color.Black, 6);
 
 
             graph = new Graph(circleList, bmpImage);
@@ -156,7 +156,7 @@ namespace SemAlgoritmia
 
 
             Graphics g = Graphics.FromImage(bmpGraph);
-            Pen p = new Pen(Color.LimeGreen, 5);
+            Pen p = new Pen(Color.LimeGreen, 8);
 
             Edge e_i;
 
