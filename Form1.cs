@@ -69,7 +69,6 @@ namespace SemAlgoritmia
 
             treeView.Visible = true;
             groupBox.Visible = true;
-            groupBoxShortestPath.Visible = true;
             buttonRunSimulation.Visible = true;
 
             buttonRunSimulation.Enabled = false;
@@ -136,8 +135,13 @@ namespace SemAlgoritmia
 
         private void buttonShortestPath_Click(object sender, EventArgs e)
         {
-            if(comboBoxShortestPath.SelectedIndex == -1) {
+            if (comboBoxShortestPath.SelectedIndex == -1) {
                 MessageBox.Show("Debes seleccionar un índice válido", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if(!isInVD((Vertex)comboBoxShortestPath.SelectedItem)) {
+                MessageBox.Show("El " + comboBoxShortestPath.SelectedItem.ToString() + " y el objetivo se encuentran en subgrafos distintos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -154,8 +158,10 @@ namespace SemAlgoritmia
                         break;
                     }
 
+            bmpAnimation = new Bitmap(bmpGraph);
+            pictureBox.Image = bmpAnimation;
 
-            Graphics g = Graphics.FromImage(bmpGraph);
+            Graphics g = Graphics.FromImage(bmpAnimation);
             Pen p = new Pen(Color.LimeGreen, 8);
 
             Edge e_i;
@@ -376,6 +382,16 @@ namespace SemAlgoritmia
             }
 
             return vertices;
+        }
+
+
+        bool isInVD(Vertex v)
+        {
+            for(int i=0; i<VD.Count; i++)
+                if(VD[i].Vertex == v)
+                    return true;
+
+            return false;
         }
 
         
