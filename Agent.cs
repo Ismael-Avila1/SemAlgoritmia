@@ -143,6 +143,25 @@ namespace SemAlgoritmia
         }
 
 
+        public bool walk2()
+        {
+            if(indexPath + 8 <= shortestPath.Peek().Path.Count -1) {
+                if(indexPath + 8 < shortestPath.Peek().Path.Count - 1)
+                    indexPath += 8;
+                else
+                    indexPath = shortestPath.Peek().Path.Count - 1;
+                return true;
+            }
+
+            Edge e = shortestPath.Dequeue();
+
+            currentVertex = e.Destination;
+            indexPath = 0;
+            return false;
+        }
+
+
+
 
     }
 }

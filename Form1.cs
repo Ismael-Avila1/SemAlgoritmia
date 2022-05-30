@@ -178,10 +178,11 @@ namespace SemAlgoritmia
             Graphics g = Graphics.FromImage(bmpAnimation);
             Agent agent_i, firstAgent = null;
 
-            bool animation = true, stopAnimation = true, existObjetive = true;
+            bool animation = true, moveOthers = true, existObjetive = true;
 
             while(animation) {
                 g.Clear(Color.Transparent);
+                drawCircle(objetive.ObjetiveVertex.Position.X, objetive.ObjetiveVertex.Position.Y, 4, bmpGraph, Color.LightYellow, 2);
 
                 for(int i=0; i<agents.Count; i++) {
                     agent_i = agents[i];
@@ -198,6 +199,21 @@ namespace SemAlgoritmia
                         }
                     }
 
+                }
+
+                pictureBox.Refresh();
+            }
+
+            for(int i=0; i<agents.Count; i++) {
+                g.Clear(Color.Transparent);
+
+                drawCircle(firstAgent.Position.X, firstAgent.Position.Y, 8, bmpAnimation, Color.CornflowerBlue, 3);
+
+                agent_i = agents[i];
+
+                if(agent_i != firstAgent) {
+                    while(agent_i.fisishEdge())
+                        drawCircle(agent_i.Position.X, agent_i.Position.Y, 8, bmpAnimation, Color.CornflowerBlue, 3);
                 }
 
                 pictureBox.Refresh();
