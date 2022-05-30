@@ -52,7 +52,7 @@ namespace SemAlgoritmia
 
             findCircles();
 
-            for (int i=0; i<circleList.Count; i++)
+            for(int i=0; i<circleList.Count; i++)
                 drawCircle(circleList[i].Center.X, circleList[i].Center.Y, circleList[i].R, bmpImage, Color.Black, 6);
 
 
@@ -257,9 +257,9 @@ namespace SemAlgoritmia
 
         bool isWhite(Color color)
         {
-            if (color.R == 255)
-                if (color.G == 255)
-                    if (color.B == 255)
+            if(color.R == 255)
+                if(color.G == 255)
+                    if(color.B == 255)
                         return true;
             return false;
         }
@@ -278,7 +278,7 @@ namespace SemAlgoritmia
             int leftMostPixel = x;
             Color c = bmpImage.GetPixel(x, y);
 
-            while (isBlack(c)) {
+            while(isBlack(c)) {
                 leftMostPixel--;
                 c = bmpImage.GetPixel(leftMostPixel, y);
             }
@@ -291,7 +291,7 @@ namespace SemAlgoritmia
             int rightMostPixel = x;
             Color c = bmpImage.GetPixel(x, y);
 
-            while (isBlack(c)) {
+            while(isBlack(c)) {
                 rightMostPixel++;
                 c = bmpImage.GetPixel(rightMostPixel, y);
             }
@@ -304,7 +304,7 @@ namespace SemAlgoritmia
             int bottomMostPixel = y;
             Color c = bmpImage.GetPixel(x, y);
 
-            while (isBlack(c)) {
+            while(isBlack(c)) {
                 bottomMostPixel++;
                 c = bmpImage.GetPixel(x, bottomMostPixel);
             }
@@ -316,11 +316,11 @@ namespace SemAlgoritmia
         {
             Color c_i;
 
-            for (int y_i=0; y_i<bmpImage.Height; y_i++)
-                for (int x_i=0; x_i<bmpImage.Width; x_i++) {
+            for(int y_i=0; y_i<bmpImage.Height; y_i++)
+                for(int x_i=0; x_i<bmpImage.Width; x_i++) {
                     c_i = bmpImage.GetPixel(x_i, y_i);
 
-                    if (isBlack(c_i))
+                    if(isBlack(c_i))
                         findCenter(x_i, y_i);
                 }
         }
@@ -362,13 +362,12 @@ namespace SemAlgoritmia
 
             Vertex v_i;
 
-            for (int i=0; i<graph.VertexCount; i++) {
+            for(int i=0; i<graph.VertexCount; i++) {
                 v_i = graph.getVertexAt(i);
 
-                for (int j=0; j<v_i.EdgesCount; j++)
+                for(int j=0; j<v_i.EdgesCount; j++)
                     g.DrawLine(p, v_i.Position, v_i.getDestinationAt(j).Position);
             }
-
         }
 
         void drawGraph()
@@ -376,11 +375,11 @@ namespace SemAlgoritmia
             drawLines();
 
             // dibujar circulos sobre las lineas
-            for (int i=0; i<circleList.Count; i++)
+            for(int i=0; i<circleList.Count; i++)
                 drawCircle(circleList[i].Center.X, circleList[i].Center.Y, circleList[i].R, bmpGraph, Color.Black, 10);
 
             // dibujar IDs sobre los circulos
-            for (int i=0; i<circleList.Count; i++)
+            for(int i=0; i<circleList.Count; i++)
                 drawID(circleList[i].Center.X, circleList[i].Center.Y, circleList[i].ID);
 
             pictureBox.Refresh();
@@ -393,11 +392,11 @@ namespace SemAlgoritmia
 
             Vertex v_i;
 
-            for (int i=0; i<graph.VertexCount; i++) {
+            for(int i=0; i<graph.VertexCount; i++) {
                 v_i = graph.getVertexAt(i);
                 TreeNode node = new TreeNode(v_i.ToString());
 
-                for (int j=0; j<v_i.EdgesCount; j++) {
+                for(int j=0; j<v_i.EdgesCount; j++) {
                     TreeNode nodeSon = new TreeNode(v_i.getDestinationAt(j).ToString());
                     node.Nodes.Add(nodeSon);
                 }
