@@ -43,7 +43,7 @@ namespace SemAlgoritmia
             groupBox.Visible = false;
             groupBoxShortestPath.Visible = false;
             buttonRunSimulation.Visible = false;
-            buttonShortestPath.Enabled = true;
+            buttonShortestPath.Enabled = false;
         }
 
         private void buttonCreateGraph_Click(object sender, EventArgs e)
@@ -68,10 +68,9 @@ namespace SemAlgoritmia
             drawGraph();
 
             treeView.Visible = true;
-            groupBox.Visible = true;
             buttonRunSimulation.Visible = true;
-
             buttonRunSimulation.Enabled = false;
+            groupBox.Visible = true;
         }
 
         private void buttonAddAgents_Click(object sender, EventArgs e)
