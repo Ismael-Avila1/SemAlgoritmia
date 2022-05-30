@@ -93,7 +93,7 @@ namespace SemAlgoritmia
             Agent agent = new Agent((Vertex)comboBoxAgentSelection.SelectedItem);
             agents.Add(agent);
 
-            drawCircle(agent.AgentVertex.Position.X, agent.AgentVertex.Position.Y, 8, bmpGraph, Color.CornflowerBlue, 2);
+            drawCircle(agent.AgentVertex.Position.X, agent.AgentVertex.Position.Y, 8, bmpGraph, Color.CornflowerBlue, 3);
             pictureBox.Refresh();
 
             comboBoxAgentSelection.Items.RemoveAt(selectedIndex);
@@ -135,7 +135,7 @@ namespace SemAlgoritmia
 
         private void buttonShortestPath_Click(object sender, EventArgs e)
         {
-            if (comboBoxShortestPath.SelectedIndex == -1) {
+            if(comboBoxShortestPath.SelectedIndex == -1) {
                 MessageBox.Show("Debes seleccionar un índice válido", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
@@ -145,25 +145,14 @@ namespace SemAlgoritmia
                 return;
             }
 
-            Vertex v_o = (Vertex)comboBoxShortestPath.SelectedItem;
-            Vertex v_d = objetive.ObjetiveVertex;
-            
-            Queue<Edge> shortestPath = new Queue<Edge>();
-
-            while(v_o != v_d)
-                for(int i=0; i<VD.Count; i++) 
-                    if(VD[i].Vertex == v_o) {
-                        shortestPath.Enqueue(v_o.getEdge(VD[i].ComimgFrom));
-                        v_o = VD[i].ComimgFrom;
-                        break;
-                    }
-
             bmpAnimation = new Bitmap(bmpGraph);
             pictureBox.Image = bmpAnimation;
 
             Graphics g = Graphics.FromImage(bmpAnimation);
             Pen p = new Pen(Color.LimeGreen, 8);
 
+
+            Queue<Edge> shortestPath = getShortestPath((Vertex)comboBoxShortestPath.SelectedItem, objetive.ObjetiveVertex);
             Edge e_i;
 
             while(shortestPath.Count > 0) {
@@ -178,10 +167,45 @@ namespace SemAlgoritmia
 
         private void buttonRunSimulation_Click(object sender, EventArgs e)
         {
+            drawGraph();
+
             bmpAnimation = new Bitmap(bmpGraph);
             pictureBox.Image = bmpAnimation;
 
-            simulation();
+            for(int i=0; i<agents.Count; i++)
+                agents[i].ShortestPath = getShortestPath(agents[i].AgentVertex, objetive.ObjetiveVertex);
+
+            Graphics g = Graphics.FromImage(bmpAnimation);
+            Agent agent_i, firstAgent = null;
+
+            bool animation = true, stopAnimation = true, existObjetive = true;
+
+            while(animation) {
+                g.Clear(Color.Transparent);
+
+                for(int i=0; i<agents.Count; i++) {
+                    agent_i = agents[i];
+
+                    if(agent_i.ShortestPath != null) {
+                        
+                        if(agent_i.walk())
+                            drawCircle(agent_i.Position.X, agent_i.Position.Y, 8, bmpAnimation, Color.CornflowerBlue, 3);
+
+
+                        if(agent_i.CurrentVertex == objetive.ObjetiveVertex) {
+                            firstAgent = agent_i;
+                            animation = false;
+                        }
+                    }
+
+                }
+
+                pictureBox.Refresh();
+            }
+            
+            MessageBox.Show("El agente del " + firstAgent.AgentVertex.ToString() + " fue el primero en llegar al objetivo.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            
         }
 
 
@@ -364,12 +388,7 @@ namespace SemAlgoritmia
             }
         }
 
-        void simulation()
-        {
-            
-        }
-
-
+        
         List<Vertex> breadthVertices(MyTree breadthTree)
         {
             List<Vertex> vertices = new List<Vertex>();
@@ -394,6 +413,24 @@ namespace SemAlgoritmia
             return false;
         }
 
-        
+        Queue<Edge> getShortestPath(Vertex v_o, Vertex v_d)
+        {
+            if(!isInVD(v_o))
+                return null;
+
+            Queue<Edge> shortestPath = new Queue<Edge>();
+
+            while(v_o != v_d)
+                for(int i = 0; i < VD.Count; i++)
+                    if (VD[i].Vertex == v_o) {
+                        shortestPath.Enqueue(v_o.getEdge(VD[i].ComimgFrom));
+                        v_o = VD[i].ComimgFrom;
+                        break;
+                    }
+
+            return shortestPath;
+        }
+
+
     }
 }
