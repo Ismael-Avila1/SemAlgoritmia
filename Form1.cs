@@ -211,17 +211,48 @@ namespace SemAlgoritmia
 
                 agent_i = agents[i];
 
-                if(agent_i != firstAgent) {
-                    while(agent_i.fisishEdge())
-                        drawCircle(agent_i.Position.X, agent_i.Position.Y, 8, bmpAnimation, Color.CornflowerBlue, 3);
-                }
+                if(agent_i.ShortestPath != null)
+                    if(agent_i != firstAgent) {
+                        while(agent_i.fisishEdge())
+                            drawCircle(agent_i.Position.X, agent_i.Position.Y, 8, bmpAnimation, Color.CornflowerBlue, 3);
+                    }
 
                 pictureBox.Refresh();
             }
             
             MessageBox.Show("El agente del " + firstAgent.AgentVertex.ToString() + " fue el primero en llegar al objetivo.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
+            for(int i=0; i<agents.Count; i++)
+                agents[i].AgentVertex = agents[i].CurrentVertex;
+
+
+            // se eliminan los agentes que estén el un mismo vertice
+            for(int i=0; i<agents.Count; i++)
+                for(int j=i+1; j<agents.Count; j++)
+                    if(agents[i].AgentVertex == agents[j].AgentVertex) {
+                        agents.RemoveAt(j);
+                    }
             
+            fillComboBoxes();
+
+            for(int i=0; i<agents.Count; i++)
+                if(comboBoxAgentSelection.Items.Contains(agents[i].AgentVertex)) {
+                    comboBoxAgentSelection.Items.Remove(agents[i].AgentVertex);
+                    comboBoxObjetiveSelection.Items.Remove(agents[i].AgentVertex);
+                }
+
+            isObjetiveCreated = false;
+            buttonShortestPath.Enabled = false;
+            buttonAddObjetive.Enabled = true;
+            buttonRunSimulation.Enabled = false;
+
+
+            g.Clear(Color.Transparent);
+            
+            for(int i=0; i<agents.Count; i++)
+                drawCircle(agents[i].AgentVertex.Position.X, agents[i].AgentVertex.Position.Y, 8, bmpAnimation, Color.CornflowerBlue, 3);
+
+            pictureBox.Refresh();
         }
 
 

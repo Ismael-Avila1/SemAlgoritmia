@@ -143,7 +143,7 @@ namespace SemAlgoritmia
         }
 
 
-        public bool walk2()
+        public bool fisishEdge()
         {
             if(indexPath + 8 <= shortestPath.Peek().Path.Count -1) {
                 if(indexPath + 8 < shortestPath.Peek().Path.Count - 1)
