@@ -21,7 +21,7 @@ namespace SemAlgoritmia
             vertexList = new List<Vertex>();
 
             foreach(Circle c_i in circlesList)
-                vertexList.Add(new Vertex(c_i.ID, c_i.Center));
+                vertexList.Add(new Vertex(c_i));
 
             Vertex vertexOrigin;
             Vertex vertexDestination;

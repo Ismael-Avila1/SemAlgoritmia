@@ -9,20 +9,18 @@ namespace SemAlgoritmia
     internal class Vertex
     {
         List<Edge> edgesList;
-        int id;
-        Point position;
+        Circle circle;
 
         public Vertex()
         {
             edgesList = new List<Edge>();
         }
 
-        public Vertex(int id, Point position)
+        public Vertex(Circle circle)
         {
             edgesList = new List<Edge>();
 
-            this.id = id;
-            this.position = position;
+            this.circle = circle;
         }
 
 
@@ -33,12 +31,12 @@ namespace SemAlgoritmia
 
         public int Id
         {
-            get { return id; }
+            get { return circle.ID; }
         }
 
         public Point Position
         {
-            get { return position; }
+            get { return circle.Center; }
         }
 
         public int EdgesCount
@@ -64,7 +62,7 @@ namespace SemAlgoritmia
 
         public override string ToString()
         {
-            return "Vertice " + id;
+            return "Vertice " + circle.ID.ToString();
         }
 
         public int findDestinationVertexIndex(Vertex vertexOrigin, Vertex vertexDestination)
