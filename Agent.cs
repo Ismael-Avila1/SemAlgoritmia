@@ -145,6 +145,9 @@ namespace SemAlgoritmia
 
         public bool fisishEdge()
         {
+            if(shortestPath.Count == 0)
+                return false;
+
             if(indexPath + 8 <= shortestPath.Peek().Path.Count -1) {
                 if(indexPath + 8 < shortestPath.Peek().Path.Count - 1)
                     indexPath += 8;
@@ -154,9 +157,9 @@ namespace SemAlgoritmia
             }
 
             Edge e = shortestPath.Dequeue();
-
             currentVertex = e.Destination;
             indexPath = 0;
+
             return false;
         }
 
