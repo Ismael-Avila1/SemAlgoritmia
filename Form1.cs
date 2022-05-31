@@ -183,14 +183,17 @@ namespace SemAlgoritmia
                 g.Clear(Color.Transparent);
                 drawCircle(objetive.ObjetiveVertex.Position.X, objetive.ObjetiveVertex.Position.Y, 4, bmpGraph, Color.LightYellow, 2);
 
+                for(int i=0; i<agents.Count; i++)
+                    if(agents[i].ShortestPath == null)
+                        drawCircle(agents[i].AgentVertex.Position.X, agents[i].AgentVertex.Position.Y, 8, bmpAnimation, Color.CornflowerBlue, 3);
+
                 for(int i=0; i<agents.Count; i++) {
                     agent_i = agents[i];
 
+                    
                     if(agent_i.ShortestPath != null) {
-                        
                         if(agent_i.walk())
                             drawCircle(agent_i.Position.X, agent_i.Position.Y, 8, bmpAnimation, Color.CornflowerBlue, 3);
-
 
                         if(agent_i.CurrentVertex == objetive.ObjetiveVertex) {
                             firstAgent = agent_i;
@@ -210,11 +213,16 @@ namespace SemAlgoritmia
 
                 agent_i = agents[i];
 
-                if(agent_i.ShortestPath != null)
+                if(agent_i.ShortestPath == null) {
+                    drawCircle(agent_i.AgentVertex.Position.X, agent_i.AgentVertex.Position.Y, 8, bmpAnimation, Color.CornflowerBlue, 3);
+                }
+                else {
                     if(agent_i != firstAgent) {
                         while(agent_i.fisishEdge())
                             drawCircle(agent_i.Position.X, agent_i.Position.Y, 8, bmpAnimation, Color.CornflowerBlue, 3);
                     }
+
+                }
 
                 pictureBox.Refresh();
             }
