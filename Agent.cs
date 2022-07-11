@@ -16,10 +16,8 @@ namespace SemAlgoritmia
         Queue<Edge> shortestPath;
         int indexPath;
         Point position;
-
         Vertex currentVertex;
 
-        bool canWalk;
 
         public Agent()
         {
@@ -37,8 +35,6 @@ namespace SemAlgoritmia
             this.agentVertex = agentVertex;
             currentVertex = agentVertex;
             indexPath = 0;
-
-            canWalk = true;
         }
 
 
@@ -81,11 +77,6 @@ namespace SemAlgoritmia
             set { CurrentVertex = value; }
         }
 
-        public bool CanWalk
-        {
-            get { return canWalk; }
-            set { canWalk = value; }
-        }
 
         public int IndexPath
         {

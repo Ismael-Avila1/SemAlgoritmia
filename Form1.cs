@@ -151,7 +151,7 @@ namespace SemAlgoritmia
             Pen p = new Pen(Color.LimeGreen, 8);
 
 
-            Queue<Edge> shortestPath = getShortestPath((Vertex)comboBoxShortestPath.SelectedItem, objetive.ObjetiveVertex);
+            Queue<Edge> shortestPath = getShortestPath((Vertex)comboBoxShortestPath.SelectedItem);
             Edge e_i;
 
             while(shortestPath.Count > 0) {
@@ -172,12 +172,12 @@ namespace SemAlgoritmia
             pictureBox.Image = bmpAnimation;
 
             for(int i=0; i<agents.Count; i++)
-                agents[i].ShortestPath = getShortestPath(agents[i].AgentVertex, objetive.ObjetiveVertex);
+                agents[i].ShortestPath = getShortestPath(agents[i].AgentVertex);
 
             Graphics g = Graphics.FromImage(bmpAnimation);
             Agent agent_i, firstAgent = null;
 
-            bool animation = true, moveOthers = true, existObjetive = true;
+            bool animation = true;
 
             while(animation) {
                 g.Clear(Color.Transparent);
@@ -466,14 +466,14 @@ namespace SemAlgoritmia
             return false;
         }
 
-        Queue<Edge> getShortestPath(Vertex v_o, Vertex v_d)
+        Queue<Edge> getShortestPath(Vertex v_o)
         {
             if(!isInVD(v_o))
                 return null;
 
             Queue<Edge> shortestPath = new Queue<Edge>();
 
-            while(v_o != v_d)
+            while(v_o != objetive.ObjetiveVertex)
                 for(int i = 0; i < VD.Count; i++)
                     if (VD[i].Vertex == v_o) {
                         shortestPath.Enqueue(v_o.getEdge(VD[i].ComimgFrom));
